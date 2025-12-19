@@ -6,6 +6,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,5 +136,107 @@ public class ShulkerUtils {
             }
         }
         return count;
+    }
+
+    /**
+     * Finds a shulker box with space in the opened container (ScreenHandler).
+     * This allows storing items in shulker boxes that are inside chests, ender chests, etc.
+     *
+     * @param handler The screen handler (opened container)
+     * @return The slot index of the first shulker box with space, or -1 if none found
+     */
+    public static int findShulkerWithSpaceInContainer(ScreenHandler handler) {
+        if (handler == null) {
+            return -1;
+        }
+
+        // Check all slots in the container (excluding player inventory slots)
+        // Most containers have their slots at the beginning
+        for (int i = 0; i < handler.slots.size(); i++) {
+            Slot slot = handler.slots.get(i);
+
+            // Skip player inventory slots (they start after container slots)
+            if (slot.inventory instanceof PlayerInventory) {
+                continue;
+            }
+
+            ItemStack stack = slot.getStack();
+            if (isShulkerBox(stack) && hasSpace(stack)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Stores an item in a shulker box located in a ScreenHandler slot.
+     * This works with shulker boxes in chests, ender chests, and other containers.
+     *
+     * @param handler The screen handler (opened container)
+     * @param slotIndex The slot index where the shulker box is located
+     * @param itemToStore The item to store
+     * @return The remaining stack that couldn't be stored (empty if successful)
+     */
+    public static ItemStack storeInShulkerAtSlot(ScreenHandler handler, int slotIndex, ItemStack itemToStore) {
+        if (handler == null || itemToStore.isEmpty() || slotIndex < 0 || slotIndex >= handler.slots.size()) {
+            return itemToStore;
+        }
+
+        if (isShulkerBox(itemToStore)) {
+            return itemToStore;
+        }
+
+        Slot slot = handler.slots.get(slotIndex);
+        ItemStack shulkerBox = slot.getStack();
+
+        if (!isShulkerBox(shulkerBox)) {
+            return itemToStore;
+        }
+
+        ItemStack remaining = insertItem(shulkerBox, itemToStore);
+
+        // Mark the slot as dirty to sync changes
+        slot.markDirty();
+
+        return remaining;
+    }
+
+    /**
+     * Tries to store an item in any available shulker box, checking both the player's
+     * inventory and any opened container.
+     *
+     * @param handler The current screen handler (can be null)
+     * @param inventory The player's inventory
+     * @param itemToStore The item to store
+     * @return The remaining stack that couldn't be stored (empty if successful)
+     */
+    public static ItemStack storeInAnyShulker(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore) {
+        if (itemToStore.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        if (isShulkerBox(itemToStore)) {
+            return itemToStore;
+        }
+
+        ItemStack remaining = itemToStore.copy();
+
+        // First, try to store in shulker boxes in the opened container
+        if (handler != null) {
+            int containerShulkerSlot = findShulkerWithSpaceInContainer(handler);
+            if (containerShulkerSlot != -1) {
+                remaining = storeInShulkerAtSlot(handler, containerShulkerSlot, remaining);
+                if (remaining.isEmpty()) {
+                    return ItemStack.EMPTY;
+                }
+            }
+        }
+
+        // If still items remaining, try player inventory shulker boxes
+        if (!remaining.isEmpty()) {
+            remaining = storeInShulker(inventory, remaining);
+        }
+
+        return remaining;
     }
 }
