@@ -73,10 +73,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version Comparison
 
-| Version | Minecraft Support | ModMenu | License | Package Name |
-|---------|------------------|---------|---------|--------------|
-| 1.0.0   | 1.21 - 1.21.11   | ❌      | CC0-1.0 | com.example.dennisthegamer |
-| 1.1.0   | 1.21 - 1.21.11   | ✅*     | MIT     | com.autoshulker |
+| Version | Minecraft Support | ModMenu | License | Package Name | Container Support |
+|---------|------------------|---------|---------|--------------|-------------------|
+| 1.0.0   | 1.21 - 1.21.11   | ❌      | CC0-1.0 | com.example.dennisthegamer | ❌ |
+| 1.1.0   | 1.21 - 1.21.11   | ✅*     | MIT     | com.autoshulker | ❌ |
+| 1.2.0   | 1.21 - 1.21.11   | ✅*     | MIT     | com.autoshulker | ✅ |
 
 *ModMenu only included in the 1.21.9-1.21.11 build
 
