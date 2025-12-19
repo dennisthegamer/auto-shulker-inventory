@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "com.autoshulker.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"PlayerInventoryMixin",
+		"ScreenHandlerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
