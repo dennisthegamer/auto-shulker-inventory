@@ -32,23 +32,35 @@ public abstract class ScreenHandlerMixin {
             return;
         }
 
+        if (slotIndex < 0) {
+            return;
+        }
+
         PlayerInventory inventory = player.getInventory();
 
         if (!InventoryUtils.isMainInventoryFull(inventory)) {
             return;
         }
 
-        ItemStack cursorStack = player.currentScreenHandler.getCursorStack();
+        // Get the slot that was clicked
+        ScreenHandler handler = player.currentScreenHandler;
+        if (slotIndex >= handler.slots.size()) {
+            return;
+        }
 
-        if (!cursorStack.isEmpty() && !ShulkerUtils.isShulkerBox(cursorStack)) {
-            // Try to store in both container shulker boxes and inventory shulker boxes
-            ScreenHandler handler = player.currentScreenHandler;
-            ItemStack remaining = ShulkerUtils.storeInAnyShulker(handler, inventory, cursorStack);
+        Slot clickedSlot = handler.slots.get(slotIndex);
+        ItemStack slotStack = clickedSlot.getStack();
 
-            if (remaining.getCount() < cursorStack.getCount()) {
-                player.currentScreenHandler.setCursorStack(remaining);
+        // If the item is still in the slot (QUICK_MOVE failed) and it's not a shulker box
+        if (!slotStack.isEmpty() && !ShulkerUtils.isShulkerBox(slotStack)) {
+            // Try to store in shulker boxes (container first, then inventory)
+            ItemStack remaining = ShulkerUtils.storeInAnyShulker(handler, inventory, slotStack);
 
-                int storedCount = cursorStack.getCount() - remaining.getCount();
+            if (remaining.getCount() < slotStack.getCount()) {
+                // Update the slot with the remaining items
+                clickedSlot.setStack(remaining);
+
+                int storedCount = slotStack.getCount() - remaining.getCount();
                 AutoShulkerInventory.LOGGER.info("Auto-stored {} items in shulker box (inventory full)",
                         storedCount);
             }
