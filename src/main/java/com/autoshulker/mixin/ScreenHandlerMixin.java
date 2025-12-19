@@ -41,13 +41,16 @@ public abstract class ScreenHandlerMixin {
         ItemStack cursorStack = player.currentScreenHandler.getCursorStack();
 
         if (!cursorStack.isEmpty() && !ShulkerUtils.isShulkerBox(cursorStack)) {
-            ItemStack remaining = ShulkerUtils.storeInShulker(inventory, cursorStack);
+            // Try to store in both container shulker boxes and inventory shulker boxes
+            ScreenHandler handler = player.currentScreenHandler;
+            ItemStack remaining = ShulkerUtils.storeInAnyShulker(handler, inventory, cursorStack);
 
             if (remaining.getCount() < cursorStack.getCount()) {
                 player.currentScreenHandler.setCursorStack(remaining);
 
-                AutoShulkerInventory.LOGGER.info("Auto-stored {} items from cursor in shulker box",
-                        cursorStack.getCount() - remaining.getCount());
+                int storedCount = cursorStack.getCount() - remaining.getCount();
+                AutoShulkerInventory.LOGGER.info("Auto-stored {} items in shulker box (inventory full)",
+                        storedCount);
             }
         }
     }

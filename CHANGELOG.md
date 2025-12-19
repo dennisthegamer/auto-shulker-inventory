@@ -5,6 +5,22 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-12-19
+
+### Added
+- Container shulker box support: Items can now be automatically stored in shulker boxes located inside opened containers (chests, ender chests, etc.)
+- New utility methods in ShulkerUtils:
+  - `findShulkerWithSpaceInContainer()`: Detects shulker boxes in opened containers
+  - `storeInShulkerAtSlot()`: Stores items in shulker boxes at specific container slots
+  - `storeInAnyShulker()`: Unified storage method that prioritizes container shulker boxes over inventory shulker boxes
+
+### Changed
+- ScreenHandlerMixin now uses `storeInAnyShulker()` to check both container and inventory shulker boxes
+- Storage priority: Container shulker boxes are checked first, then player inventory shulker boxes
+
+### Fixed
+- Items can now be stored in shulker boxes even when they're not in the player's inventory
+
 ## [1.1.0] - 2025-12-19
 
 ### Added
