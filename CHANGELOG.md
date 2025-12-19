@@ -5,7 +5,7 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2024-12-19
+## [1.1.0] - 2025-12-19
 
 ### Added
 - ModMenu integration for Minecraft 1.21.9-1.21.11
@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Compatibility issues with newer Minecraft versions (1.21.9+)
 - Improved code organization and maintainability
 
-## [1.0.0] - 2024-12-18
+## [1.0.0] - 2025-12-18
 
 ### Added
 - Initial release
