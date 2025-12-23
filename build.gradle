@@ -68,6 +68,15 @@ dependencies {
 	// Using modImplementation (not include) so it works in dev but isn't bundled in the JAR
 	modImplementation "maven.modrinth:cloth-config:${project.cloth_config_version}"
 
+	// ModMenu for dev environment only - version 15.0.0 for MC 1.21.8
+	// modCompileOnly: Available at compile time for API usage
+	// modLocalRuntime: Available at runtime in dev environment
+	// NOT included in the final JAR
+	if (project.minecraft_version == "1.21.8") {
+		modCompileOnly "maven.modrinth:modmenu:15.0.0"
+		modLocalRuntime "maven.modrinth:modmenu:15.0.0"
+	}
+
 }
 
 processResources {
