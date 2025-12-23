@@ -1,5 +1,6 @@
 package com.autoshulker.util;
 
+import com.autoshulker.config.ModConfig;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ContainerComponent;
 import net.minecraft.entity.player.PlayerInventory;
@@ -211,6 +212,19 @@ public class ShulkerUtils {
      * @return The remaining stack that couldn't be stored (empty if successful)
      */
     public static ItemStack storeInAnyShulker(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore) {
+        return storeInAnyShulker(handler, inventory, itemToStore, ItemStack.EMPTY);
+    }
+
+    /**
+     * Tries to store an item in any available shulker box, prioritizing the cursor stack if it's a shulker box.
+     *
+     * @param handler The current screen handler (can be null)
+     * @param inventory The player's inventory
+     * @param itemToStore The item to store
+     * @param cursorStack The item currently held by the cursor (prioritized if it's a shulker box)
+     * @return The remaining stack that couldn't be stored (empty if successful)
+     */
+    public static ItemStack storeInAnyShulker(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore, ItemStack cursorStack) {
         if (itemToStore.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -221,7 +235,15 @@ public class ShulkerUtils {
 
         ItemStack remaining = itemToStore.copy();
 
-        // First, try to store in shulker boxes in the opened container
+        // FIRST PRIORITY: Try to store in the shulker box held by cursor
+        if (!cursorStack.isEmpty() && isShulkerBox(cursorStack) && hasSpace(cursorStack)) {
+            remaining = insertItem(cursorStack, remaining);
+            if (remaining.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        // Second priority: Try to store in shulker boxes in the opened container
         if (handler != null) {
             int containerShulkerSlot = findShulkerWithSpaceInContainer(handler);
             if (containerShulkerSlot != -1) {
@@ -232,8 +254,57 @@ public class ShulkerUtils {
             }
         }
 
-        // If still items remaining, try player inventory shulker boxes
+        // Third priority: Try player inventory shulker boxes
         if (!remaining.isEmpty()) {
+            remaining = storeInShulker(inventory, remaining);
+        }
+
+        return remaining;
+    }
+
+    /**
+     * Tries to store an item in any available shulker box with priority system awareness.
+     * Respects config settings for cursor, container, and inventory priorities.
+     *
+     * @param handler The current screen handler (can be null)
+     * @param inventory The player's inventory
+     * @param itemToStore The item to store
+     * @param cursorStack The item currently held by the cursor (prioritized if it's a shulker box)
+     * @return The remaining stack that couldn't be stored (empty if successful)
+     */
+    public static ItemStack storeInAnyShulkerWithPriority(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore, ItemStack cursorStack) {
+        if (itemToStore.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        if (isShulkerBox(itemToStore)) {
+            return itemToStore;
+        }
+
+        ItemStack remaining = itemToStore.copy();
+        ModConfig config = ModConfig.getInstance();
+
+        // FIRST PRIORITY: Try to store in the shulker box held by cursor (if enabled)
+        if (config.enableCursorPriority && !cursorStack.isEmpty() && isShulkerBox(cursorStack) && hasSpace(cursorStack)) {
+            remaining = insertItem(cursorStack, remaining);
+            if (remaining.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        // Second priority: Try to store in shulker boxes in the opened container (if enabled)
+        if (config.enableContainerShulkerPriority && handler != null) {
+            int containerShulkerSlot = findShulkerWithSpaceInContainer(handler);
+            if (containerShulkerSlot != -1) {
+                remaining = storeInShulkerAtSlot(handler, containerShulkerSlot, remaining);
+                if (remaining.isEmpty()) {
+                    return ItemStack.EMPTY;
+                }
+            }
+        }
+
+        // Third priority: Try player inventory shulker boxes (if enabled)
+        if (config.enableInventoryShulkerFallback && !remaining.isEmpty()) {
             remaining = storeInShulker(inventory, remaining);
         }
 

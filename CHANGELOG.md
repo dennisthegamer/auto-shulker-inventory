@@ -5,6 +5,52 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-12-23
+
+### Added
+- **Configuration System**: Full in-game configuration via ModMenu
+  - Cloth Config integration for GUI settings screen
+  - JSON-based config file (`config/auto_shulker_inventory.json`)
+  - Four configuration categories:
+    1. **Main Features**: Toggle auto-storage and shift-click storage independently
+    2. **Priority System**: Configure storage priority order (cursor, container, inventory)
+    3. **Notifications & Feedback**: Enable/disable chat notifications, sound effects, and visual indicators
+    4. **Advanced Options**: Debug logging and storage delay settings
+- **Cursor Stack Priority**: When using Shift+Click, items are now preferentially stored in shulker boxes held by the cursor (in hand)
+- Storage priority order for Shift+Click operations:
+  1. Shulker box held by cursor (highest priority)
+  2. Shulker boxes in opened containers
+  3. Shulker boxes in player inventory
+- ModMenu integration with config button
+- Localization support for all config options (en_us language file)
+
+### Changed
+- `storeInAnyShulker()` now has an overloaded version that accepts a cursor stack parameter
+- Improved logging to show action type and button information
+- All features can now be toggled individually via the config screen
+
+### Fixed
+- Shift+Right-Click now properly stores items in shulker boxes
+- Items now go into the shulker box you're holding (with Shift+Click) instead of a random one in your inventory
+- Added explicit button parameter validation to support both left-click (button 0) and right-click (button 1) shift operations
+
+## [1.2.0] - 2025-12-19
+
+### Added
+- Container shulker box support: Items can now be automatically stored in shulker boxes located inside opened containers (chests, ender chests, etc.)
+- New utility methods in ShulkerUtils:
+  - `findShulkerWithSpaceInContainer()`: Detects shulker boxes in opened containers
+  - `storeInShulkerAtSlot()`: Stores items in shulker boxes at specific container slots
+  - `storeInAnyShulker()`: Unified storage method that prioritizes container shulker boxes over inventory shulker boxes
+
+### Changed
+- ScreenHandlerMixin now uses `storeInAnyShulker()` to check both container and inventory shulker boxes
+- Storage priority: Container shulker boxes are checked first, then player inventory shulker boxes
+
+### Fixed
+- Shift-click logic now properly checks the clicked slot instead of cursor stack
+- Items can now be stored in shulker boxes even when they're not in the player's inventory
+
 ## [1.1.0] - 2024-12-19
 
 ### Added
