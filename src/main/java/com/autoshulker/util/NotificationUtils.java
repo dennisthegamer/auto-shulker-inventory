@@ -30,7 +30,7 @@ public class NotificationUtils {
 
         // Play sound effect if enabled
         if (config.enableSoundEffects) {
-            player.getEntityWorld().playSound(
+            player.getWorld().playSound(
                 null,  // null = play for all nearby players
                 player.getBlockPos(),
                 SoundEvents.BLOCK_SHULKER_BOX_CLOSE,
