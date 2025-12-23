@@ -1,7 +1,9 @@
 package com.autoshulker.mixin;
 
 import com.autoshulker.AutoShulkerInventory;
+import com.autoshulker.config.ModConfig;
 import com.autoshulker.util.InventoryUtils;
+import com.autoshulker.util.NotificationUtils;
 import com.autoshulker.util.ShulkerUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,9 +23,18 @@ public abstract class ScreenHandlerMixin {
     @Shadow
     public abstract Slot getSlot(int slotId);
 
+    @Shadow
+    public abstract ItemStack getCursorStack();
+
     @Inject(method = "internalOnSlotClick", at = @At("RETURN"))
-    private void onQuickMove(int slotIndex, int button, SlotActionType actionType,
+    private void onSlotClick(int slotIndex, int button, SlotActionType actionType,
                              PlayerEntity player, CallbackInfo ci) {
+        // CONFIG CHECK: Only proceed if shift-click storage is enabled
+        if (!ModConfig.getInstance().enableShiftClickStorage) {
+            return;
+        }
+
+        // Only support Shift+Click operations (QUICK_MOVE)
         if (actionType != SlotActionType.QUICK_MOVE) {
             return;
         }
@@ -51,18 +62,35 @@ public abstract class ScreenHandlerMixin {
         Slot clickedSlot = handler.slots.get(slotIndex);
         ItemStack slotStack = clickedSlot.getStack();
 
-        // If the item is still in the slot (QUICK_MOVE failed) and it's not a shulker box
+        // Get the cursor stack (item held by mouse) to prioritize it if it's a shulker box
+        ItemStack cursorStack = getCursorStack();
+
+        // If the item is still in the slot and it's not a shulker box
         if (!slotStack.isEmpty() && !ShulkerUtils.isShulkerBox(slotStack)) {
-            // Try to store in shulker boxes (container first, then inventory)
-            ItemStack remaining = ShulkerUtils.storeInAnyShulker(handler, inventory, slotStack);
+            // CONFIG CHECK: Build priority-aware storage call
+            ItemStack remaining = ShulkerUtils.storeInAnyShulkerWithPriority(
+                handler,
+                inventory,
+                slotStack,
+                cursorStack
+            );
 
             if (remaining.getCount() < slotStack.getCount()) {
                 // Update the slot with the remaining items
                 clickedSlot.setStack(remaining);
 
                 int storedCount = slotStack.getCount() - remaining.getCount();
-                AutoShulkerInventory.LOGGER.info("Auto-stored {} items in shulker box (inventory full)",
-                        storedCount);
+
+                // CONFIG CHECK: Debug logging
+                if (ModConfig.getInstance().enableDebugLogging) {
+                    AutoShulkerInventory.LOGGER.info(
+                        "Auto-stored {} items in shulker box (inventory full, actionType: {}, button: {})",
+                        storedCount, actionType, button
+                    );
+                }
+
+                // Send notification
+                NotificationUtils.notifyPlayer(player, storedCount);
             }
         }
     }

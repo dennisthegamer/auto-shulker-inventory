@@ -22,6 +22,21 @@ repositories {
 		name = "Modrinth"
 		url = "https://api.modrinth.com/maven"
 	}
+
+	// Shedaniel's Maven for Cloth Config
+	maven {
+		name = "Shedaniel"
+		url = "https://maven.shedaniel.me/"
+	}
+
+	// CurseForge Maven
+	maven {
+		name = "CurseForge"
+		url = "https://www.cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 loom {
@@ -47,6 +62,11 @@ dependencies {
 
 	// ModMenu for mod listing and configuration (optional - comment out if incompatible)
 	// modImplementation "maven.modrinth:modmenu:${project.modmenu_version}"
+
+	// Cloth Config API for configuration screens
+	// Note: Users need to install Cloth Config separately from Modrinth/CurseForge
+	// Using modImplementation (not include) so it works in dev but isn't bundled in the JAR
+	modImplementation "maven.modrinth:cloth-config:${project.cloth_config_version}"
 
 }
 

@@ -1,0 +1,41 @@
+{
+  "config.auto_shulker_inventory.title": "Auto Shulker Inventory Settings",
+
+  "config.auto_shulker_inventory.category.main_features": "Main Features",
+  "config.auto_shulker_inventory.category.priority_system": "Priority System",
+  "config.auto_shulker_inventory.category.feedback": "Notifications & Feedback",
+  "config.auto_shulker_inventory.category.advanced": "Advanced Options",
+
+  "config.auto_shulker_inventory.enable_auto_storage": "Enable Auto Storage",
+  "config.auto_shulker_inventory.enable_auto_storage.tooltip": "Automatically stores items in shulker boxes when inventory is full",
+
+  "config.auto_shulker_inventory.enable_shift_click_storage": "Enable Shift-Click Storage",
+  "config.auto_shulker_inventory.enable_shift_click_storage.tooltip": "Stores items in shulker boxes when shift-clicking in containers",
+
+  "config.auto_shulker_inventory.enable_cursor_priority": "Cursor Shulker Priority",
+  "config.auto_shulker_inventory.enable_cursor_priority.tooltip": "Prioritize storing items in the shulker box held by cursor (Priority 1)",
+
+  "config.auto_shulker_inventory.enable_container_priority": "Container Shulker Priority",
+  "config.auto_shulker_inventory.enable_container_priority.tooltip": "Store items in shulker boxes inside opened containers (Priority 2)",
+
+  "config.auto_shulker_inventory.enable_inventory_fallback": "Inventory Shulker Fallback",
+  "config.auto_shulker_inventory.enable_inventory_fallback.tooltip": "Use shulker boxes in player inventory as last resort (Priority 3)",
+
+  "config.auto_shulker_inventory.enable_chat_notifications": "Chat Notifications",
+  "config.auto_shulker_inventory.enable_chat_notifications.tooltip": "Show chat messages when items are auto-stored",
+
+  "config.auto_shulker_inventory.enable_sound_effects": "Sound Effects",
+  "config.auto_shulker_inventory.enable_sound_effects.tooltip": "Play sound when items are stored in shulker boxes",
+
+  "config.auto_shulker_inventory.enable_visual_indicators": "Visual Indicators",
+  "config.auto_shulker_inventory.enable_visual_indicators.tooltip": "Show particle effects when items are moved (experimental)",
+
+  "config.auto_shulker_inventory.enable_debug_logging": "Debug Logging",
+  "config.auto_shulker_inventory.enable_debug_logging.tooltip": "Enable detailed logging for troubleshooting",
+
+  "config.auto_shulker_inventory.storage_delay_ticks": "Storage Delay (ticks)",
+  "config.auto_shulker_inventory.storage_delay_ticks.tooltip": "Delay before auto-storing items (0 = instant, 20 = 1 second)",
+
+  "message.auto_shulker_inventory.stored_items": "Stored %d items in shulker box",
+  "message.auto_shulker_inventory.no_space": "No space available in shulker boxes"
+}
