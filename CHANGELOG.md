@@ -5,7 +5,7 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] - 2025-12-23
+## [1.2.1] - 2025-12-30
 
 ### Added
 - **Configuration System**: Full in-game configuration via ModMenu
@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shift+Right-Click now properly stores items in shulker boxes
 - Items now go into the shulker box you're holding (with Shift+Click) instead of a random one in your inventory
 - Added explicit button parameter validation to support both left-click (button 0) and right-click (button 1) shift operations
+- Environment metadata corrected from `*` (both) to `client` for proper Modrinth compatibility
 
 ## [1.2.0] - 2025-12-19
 
