@@ -13,7 +13,7 @@
 	},
 	"license": "MIT",
 	"icon": "assets/inventory_shulker/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
 			"com.autoshulker.AutoShulkerInventory"
