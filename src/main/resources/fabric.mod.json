@@ -3,7 +3,7 @@
 	"id": "inventory_shulker",
 	"version": "${version}",
 	"name": "Auto Shulker Inventory",
-	"description": "Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 26.1-rc-2",
+	"description": "Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 26.1",
 	"authors": [
 		"DennisTheGamer"
 	],
@@ -27,7 +27,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": ">=26.1-alpha.1",
+		"minecraft": ">=26.1",
 		"java": ">=25",
 		"fabric-api": "*"
 	},
