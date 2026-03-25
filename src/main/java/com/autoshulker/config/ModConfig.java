@@ -32,8 +32,9 @@ public class ModConfig {
     // === Additional Options ===
 
     public boolean enableDebugLogging = false;
-    public boolean enableChatNotifications = true;
-    public boolean enableSoundEffects = true;
+    // TODO: Re-enable after Cloth Config is updated to support 26.1
+    public boolean enableChatNotifications = false;
+    public boolean enableSoundEffects = false;
     public boolean enableVisualIndicators = false;  // Future: particle effects
 
     // Advanced Options

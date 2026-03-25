@@ -5,26 +5,26 @@ import com.autoshulker.config.ModConfig;
 import com.autoshulker.util.InventoryUtils;
 import com.autoshulker.util.NotificationUtils;
 import com.autoshulker.util.ShulkerUtils;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(PlayerInventory.class)
+@Mixin(Inventory.class)
 public class PlayerInventoryMixin {
 
-    @Inject(method = "insertStack(Lnet/minecraft/item/ItemStack;)Z", at = @At("RETURN"))
+    @Inject(method = "add(Lnet/minecraft/world/item/ItemStack;)Z", at = @At("RETURN"))
     private void onItemAdded(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         // CONFIG CHECK: Only proceed if auto storage is enabled
         if (!ModConfig.getInstance().enableAutoStorage) {
             return;
         }
 
-        PlayerInventory inventory = (PlayerInventory) (Object) this;
+        Inventory inventory = (Inventory) (Object) this;
 
-        if (inventory.player == null || inventory.player.getEntityWorld().isClient()) {
+        if (inventory.player == null || inventory.player.level().isClientSide()) {
             return;
         }
 
@@ -35,7 +35,7 @@ public class PlayerInventoryMixin {
         tryMoveToShulker(inventory);
     }
 
-    private void tryMoveToShulker(PlayerInventory inventory) {
+    private void tryMoveToShulker(Inventory inventory) {
         int shulkerSlot = ShulkerUtils.findShulkerWithSpace(inventory);
         if (shulkerSlot == -1) {
             return;
@@ -48,7 +48,7 @@ public class PlayerInventoryMixin {
                 continue;
             }
 
-            ItemStack itemStack = inventory.getStack(i);
+            ItemStack itemStack = inventory.getItem(i);
             if (itemStack.isEmpty() || ShulkerUtils.isShulkerBox(itemStack)) {
                 continue;
             }
@@ -58,7 +58,7 @@ public class PlayerInventoryMixin {
             if (remaining.getCount() < itemStack.getCount()) {
                 int storedCount = itemStack.getCount() - remaining.getCount();
                 totalStored += storedCount;
-                inventory.setStack(i, remaining);
+                inventory.setItem(i, remaining);
 
                 // CONFIG CHECK: Debug logging
                 if (ModConfig.getInstance().enableDebugLogging) {
@@ -70,7 +70,7 @@ public class PlayerInventoryMixin {
                 }
             }
 
-            if (!ShulkerUtils.hasSpace(inventory.getStack(shulkerSlot))) {
+            if (!ShulkerUtils.hasSpace(inventory.getItem(shulkerSlot))) {
                 break;
             }
         }

@@ -5,41 +5,41 @@ import com.autoshulker.config.ModConfig;
 import com.autoshulker.util.InventoryUtils;
 import com.autoshulker.util.NotificationUtils;
 import com.autoshulker.util.ShulkerUtils;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ScreenHandler.class)
+@Mixin(AbstractContainerMenu.class)
 public abstract class ScreenHandlerMixin {
 
     @Shadow
     public abstract Slot getSlot(int slotId);
 
     @Shadow
-    public abstract ItemStack getCursorStack();
+    public abstract ItemStack getCarried();
 
-    @Inject(method = "internalOnSlotClick", at = @At("RETURN"))
-    private void onSlotClick(int slotIndex, int button, SlotActionType actionType,
-                             PlayerEntity player, CallbackInfo ci) {
+    @Inject(method = "doClick", at = @At("RETURN"))
+    private void onSlotClick(int slotIndex, int button, ContainerInput actionType,
+                             Player player, CallbackInfo ci) {
         // CONFIG CHECK: Only proceed if shift-click storage is enabled
         if (!ModConfig.getInstance().enableShiftClickStorage) {
             return;
         }
 
-        // Only support Shift+Click operations (QUICK_MOVE)
-        if (actionType != SlotActionType.QUICK_MOVE) {
+        // Check if this is a QUICK_MOVE action (shift-click)
+        if (actionType == null || !actionType.toString().contains("QUICK_MOVE")) {
             return;
         }
 
-        if (player.getEntityWorld().isClient()) {
+        if (player.level().isClientSide()) {
             return;
         }
 
@@ -47,23 +47,23 @@ public abstract class ScreenHandlerMixin {
             return;
         }
 
-        PlayerInventory inventory = player.getInventory();
+        Inventory inventory = player.getInventory();
 
         if (!InventoryUtils.isMainInventoryFull(inventory)) {
             return;
         }
 
         // Get the slot that was clicked
-        ScreenHandler handler = player.currentScreenHandler;
+        AbstractContainerMenu handler = player.containerMenu;
         if (slotIndex >= handler.slots.size()) {
             return;
         }
 
         Slot clickedSlot = handler.slots.get(slotIndex);
-        ItemStack slotStack = clickedSlot.getStack();
+        ItemStack slotStack = clickedSlot.getItem();
 
         // Get the cursor stack (item held by mouse) to prioritize it if it's a shulker box
-        ItemStack cursorStack = getCursorStack();
+        ItemStack cursorStack = getCarried();
 
         // If the item is still in the slot and it's not a shulker box
         if (!slotStack.isEmpty() && !ShulkerUtils.isShulkerBox(slotStack)) {
@@ -77,7 +77,7 @@ public abstract class ScreenHandlerMixin {
 
             if (remaining.getCount() < slotStack.getCount()) {
                 // Update the slot with the remaining items
-                clickedSlot.setStack(remaining);
+                clickedSlot.set(remaining);
 
                 int storedCount = slotStack.getCount() - remaining.getCount();
 

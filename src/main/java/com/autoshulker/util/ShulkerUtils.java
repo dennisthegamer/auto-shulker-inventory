@@ -1,15 +1,16 @@
 package com.autoshulker.util;
 
 import com.autoshulker.config.ModConfig;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ContainerComponent;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 
+import net.minecraft.core.NonNullList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,22 +28,19 @@ public class ShulkerUtils {
         return blockItem.getBlock() instanceof ShulkerBoxBlock;
     }
 
-    public static ContainerComponent getShulkerContents(ItemStack shulkerStack) {
+    public static ItemContainerContents getShulkerContents(ItemStack shulkerStack) {
         if (!isShulkerBox(shulkerStack)) {
-            return ContainerComponent.DEFAULT;
+            return ItemContainerContents.EMPTY;
         }
 
-        return shulkerStack.getOrDefault(DataComponentTypes.CONTAINER, ContainerComponent.DEFAULT);
+        return shulkerStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
     }
 
     public static boolean hasSpace(ItemStack shulkerStack) {
-        ContainerComponent contents = getShulkerContents(shulkerStack);
+        ItemContainerContents contents = getShulkerContents(shulkerStack);
 
-        List<ItemStack> items = contents.stream().toList();
-
-        if (items.size() < 27) {
-            return true;
-        }
+        NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
+        contents.copyInto(items);
 
         for (ItemStack item : items) {
             if (item.isEmpty()) {
@@ -58,27 +56,25 @@ public class ShulkerUtils {
             return toInsert;
         }
 
-        ContainerComponent contents = getShulkerContents(shulkerStack);
-        List<ItemStack> items = new ArrayList<>(contents.stream().toList());
-
-        while (items.size() < 27) {
-            items.add(ItemStack.EMPTY);
-        }
+        ItemContainerContents contents = getShulkerContents(shulkerStack);
+        NonNullList<ItemStack> itemList = NonNullList.withSize(27, ItemStack.EMPTY);
+        contents.copyInto(itemList);
+        List<ItemStack> items = new ArrayList<>(itemList);
 
         ItemStack remaining = toInsert.copy();
 
         for (int i = 0; i < 27 && !remaining.isEmpty(); i++) {
             ItemStack slotStack = items.get(i);
 
-            if (!slotStack.isEmpty() && ItemStack.areItemsAndComponentsEqual(slotStack, remaining)) {
-                int maxStackSize = slotStack.getMaxCount();
+            if (!slotStack.isEmpty() && ItemStack.isSameItemSameComponents(slotStack, remaining)) {
+                int maxStackSize = slotStack.getMaxStackSize();
                 int currentCount = slotStack.getCount();
                 int spaceLeft = maxStackSize - currentCount;
 
                 if (spaceLeft > 0) {
                     int toTransfer = Math.min(spaceLeft, remaining.getCount());
                     slotStack.setCount(currentCount + toTransfer);
-                    remaining.decrement(toTransfer);
+                    remaining.shrink(toTransfer);
                 }
             }
         }
@@ -91,15 +87,15 @@ public class ShulkerUtils {
             }
         }
 
-        ContainerComponent newContents = ContainerComponent.fromStacks(items);
-        shulkerStack.set(DataComponentTypes.CONTAINER, newContents);
+        ItemContainerContents newContents = ItemContainerContents.fromItems(items);
+        shulkerStack.set(DataComponents.CONTAINER, newContents);
 
         return remaining;
     }
 
-    public static int findShulkerWithSpace(PlayerInventory inventory) {
+    public static int findShulkerWithSpace(Inventory inventory) {
         for (int i = 0; i < 36; i++) {
-            ItemStack stack = inventory.getStack(i);
+            ItemStack stack = inventory.getItem(i);
             if (isShulkerBox(stack) && hasSpace(stack)) {
                 return i;
             }
@@ -107,7 +103,7 @@ public class ShulkerUtils {
         return -1;
     }
 
-    public static ItemStack storeInShulker(PlayerInventory inventory, ItemStack itemToStore) {
+    public static ItemStack storeInShulker(Inventory inventory, ItemStack itemToStore) {
         if (itemToStore.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -121,18 +117,18 @@ public class ShulkerUtils {
             return itemToStore;
         }
 
-        ItemStack shulkerBox = inventory.getStack(shulkerSlot);
+        ItemStack shulkerBox = inventory.getItem(shulkerSlot);
         ItemStack remaining = insertItem(shulkerBox, itemToStore);
 
-        inventory.markDirty();
+        inventory.setChanged();
 
         return remaining;
     }
 
-    public static int countShulkerBoxes(PlayerInventory inventory) {
+    public static int countShulkerBoxes(Inventory inventory) {
         int count = 0;
         for (int i = 0; i < 36; i++) {
-            if (isShulkerBox(inventory.getStack(i))) {
+            if (isShulkerBox(inventory.getItem(i))) {
                 count++;
             }
         }
@@ -140,13 +136,13 @@ public class ShulkerUtils {
     }
 
     /**
-     * Finds a shulker box with space in the opened container (ScreenHandler).
+     * Finds a shulker box with space in the opened container (AbstractContainerMenu).
      * This allows storing items in shulker boxes that are inside chests, ender chests, etc.
      *
      * @param handler The screen handler (opened container)
      * @return The slot index of the first shulker box with space, or -1 if none found
      */
-    public static int findShulkerWithSpaceInContainer(ScreenHandler handler) {
+    public static int findShulkerWithSpaceInContainer(AbstractContainerMenu handler) {
         if (handler == null) {
             return -1;
         }
@@ -157,11 +153,11 @@ public class ShulkerUtils {
             Slot slot = handler.slots.get(i);
 
             // Skip player inventory slots (they start after container slots)
-            if (slot.inventory instanceof PlayerInventory) {
+            if (slot.container instanceof Inventory) {
                 continue;
             }
 
-            ItemStack stack = slot.getStack();
+            ItemStack stack = slot.getItem();
             if (isShulkerBox(stack) && hasSpace(stack)) {
                 return i;
             }
@@ -170,7 +166,7 @@ public class ShulkerUtils {
     }
 
     /**
-     * Stores an item in a shulker box located in a ScreenHandler slot.
+     * Stores an item in a shulker box located in a AbstractContainerMenu slot.
      * This works with shulker boxes in chests, ender chests, and other containers.
      *
      * @param handler The screen handler (opened container)
@@ -178,7 +174,7 @@ public class ShulkerUtils {
      * @param itemToStore The item to store
      * @return The remaining stack that couldn't be stored (empty if successful)
      */
-    public static ItemStack storeInShulkerAtSlot(ScreenHandler handler, int slotIndex, ItemStack itemToStore) {
+    public static ItemStack storeInShulkerAtSlot(AbstractContainerMenu handler, int slotIndex, ItemStack itemToStore) {
         if (handler == null || itemToStore.isEmpty() || slotIndex < 0 || slotIndex >= handler.slots.size()) {
             return itemToStore;
         }
@@ -188,7 +184,7 @@ public class ShulkerUtils {
         }
 
         Slot slot = handler.slots.get(slotIndex);
-        ItemStack shulkerBox = slot.getStack();
+        ItemStack shulkerBox = slot.getItem();
 
         if (!isShulkerBox(shulkerBox)) {
             return itemToStore;
@@ -197,7 +193,7 @@ public class ShulkerUtils {
         ItemStack remaining = insertItem(shulkerBox, itemToStore);
 
         // Mark the slot as dirty to sync changes
-        slot.markDirty();
+        slot.setChanged();
 
         return remaining;
     }
@@ -211,7 +207,7 @@ public class ShulkerUtils {
      * @param itemToStore The item to store
      * @return The remaining stack that couldn't be stored (empty if successful)
      */
-    public static ItemStack storeInAnyShulker(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore) {
+    public static ItemStack storeInAnyShulker(AbstractContainerMenu handler, Inventory inventory, ItemStack itemToStore) {
         return storeInAnyShulker(handler, inventory, itemToStore, ItemStack.EMPTY);
     }
 
@@ -224,7 +220,7 @@ public class ShulkerUtils {
      * @param cursorStack The item currently held by the cursor (prioritized if it's a shulker box)
      * @return The remaining stack that couldn't be stored (empty if successful)
      */
-    public static ItemStack storeInAnyShulker(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore, ItemStack cursorStack) {
+    public static ItemStack storeInAnyShulker(AbstractContainerMenu handler, Inventory inventory, ItemStack itemToStore, ItemStack cursorStack) {
         if (itemToStore.isEmpty()) {
             return ItemStack.EMPTY;
         }
@@ -272,7 +268,7 @@ public class ShulkerUtils {
      * @param cursorStack The item currently held by the cursor (prioritized if it's a shulker box)
      * @return The remaining stack that couldn't be stored (empty if successful)
      */
-    public static ItemStack storeInAnyShulkerWithPriority(ScreenHandler handler, PlayerInventory inventory, ItemStack itemToStore, ItemStack cursorStack) {
+    public static ItemStack storeInAnyShulkerWithPriority(AbstractContainerMenu handler, Inventory inventory, ItemStack itemToStore, ItemStack cursorStack) {
         if (itemToStore.isEmpty()) {
             return ItemStack.EMPTY;
         }
