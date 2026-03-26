@@ -1,6 +1,8 @@
 package com.autoshulker.util;
 
 import com.autoshulker.config.ModConfig;
+import com.autoshulker.config.ParticleStyle;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -40,10 +42,20 @@ public class NotificationUtils {
             );
         }
 
-        // Visual indicators (particle effects) - future implementation
-        if (config.enableVisualIndicators) {
-            // TODO: Spawn particle effects around player
-            // Example: ParticleTypes.PORTAL, ParticleTypes.ENCHANT
+        // Visual indicators (particle effects)
+        if (config.enableVisualIndicators && player.level() instanceof ServerLevel level) {
+            double x = player.getX();
+            double y = player.getY() + 1.0;
+            double z = player.getZ();
+            ParticleStyle style = config.particleStyle != null ? config.particleStyle : ParticleStyle.ENCHANT;
+            level.sendParticles(style.getParticle(),
+                    x, y, z,
+                    8,       // count
+                    0.3,     // xDist
+                    0.5,     // yDist
+                    0.3,     // zDist
+                    0.1      // speed
+            );
         }
     }
 }

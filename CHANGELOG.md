@@ -5,6 +5,19 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2026-03-26
+
+### Added
+- **Cloth Config integration**: Full GUI config screen via ModMenu (re-enabled for MC 26.1)
+- **Particle Style selector**: Players can now choose from 7 particle effects for visual indicators
+  - Enchant (Blue Glyphs), Portal (Purple), Happy Villager (Green Sparks), Composter (Green Stars), End Rod (White Floating), Witch (Purple Sparks), Cherry Leaves (Pink)
+- **Visual Indicators implemented**: Particle effects now spawn around the player when items are auto-stored
+
+### Changed
+- Updated Cloth Config to 26.1.154 (MC 26.1 support)
+- ModMenu changed from dev-only to full dependency for config screen access
+- Removed experimental tag from Visual Indicators
+
 ## [1.2.1] - 2025-12-30
 
 ### Added

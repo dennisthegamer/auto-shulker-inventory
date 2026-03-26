@@ -32,10 +32,10 @@ public class ModConfig {
     // === Additional Options ===
 
     public boolean enableDebugLogging = false;
-    // TODO: Re-enable after Cloth Config is updated to support 26.1
     public boolean enableChatNotifications = false;
     public boolean enableSoundEffects = false;
-    public boolean enableVisualIndicators = false;  // Future: particle effects
+    public boolean enableVisualIndicators = false;
+    public ParticleStyle particleStyle = ParticleStyle.ENCHANT;
 
     // Advanced Options
     public int storageDelayTicks = 0;  // Delay before auto-storage (0 = instant)

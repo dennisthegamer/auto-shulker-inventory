@@ -28,7 +28,17 @@
   "config.auto_shulker_inventory.enable_sound_effects.tooltip": "Play sound when items are stored in shulker boxes",
 
   "config.auto_shulker_inventory.enable_visual_indicators": "Visual Indicators",
-  "config.auto_shulker_inventory.enable_visual_indicators.tooltip": "Show particle effects when items are moved (experimental)",
+  "config.auto_shulker_inventory.enable_visual_indicators.tooltip": "Show particle effects when items are auto-stored",
+
+  "config.auto_shulker_inventory.particle_style": "Particle Style",
+  "config.auto_shulker_inventory.particle_style.tooltip": "Choose which particle effect to display",
+  "config.auto_shulker_inventory.particle_style.enchant": "Enchant (Blue Glyphs)",
+  "config.auto_shulker_inventory.particle_style.portal": "Portal (Purple)",
+  "config.auto_shulker_inventory.particle_style.happy_villager": "Happy Villager (Green Sparks)",
+  "config.auto_shulker_inventory.particle_style.composter": "Composter (Green Stars)",
+  "config.auto_shulker_inventory.particle_style.end_rod": "End Rod (White Floating)",
+  "config.auto_shulker_inventory.particle_style.witch": "Witch (Purple Sparks)",
+  "config.auto_shulker_inventory.particle_style.cherry_leaves": "Cherry Leaves (Pink)",
 
   "config.auto_shulker_inventory.enable_debug_logging": "Debug Logging",
   "config.auto_shulker_inventory.enable_debug_logging.tooltip": "Enable detailed logging for troubleshooting",

@@ -50,6 +50,9 @@ loom {
 		}
 	}
 
+	runs.configureEach {
+		vmArgs "--enable-native-access=ALL-UNNAMED", "--add-opens", "java.base/sun.misc=ALL-UNNAMED"
+	}
 }
 
 dependencies {
@@ -61,13 +64,12 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// ModMenu for mod listing and configuration (optional, dev only)
-	localRuntime "maven.modrinth:modmenu:${project.modmenu_version}"
+	// ModMenu for mod listing and configuration
+	implementation "maven.modrinth:modmenu:${project.modmenu_version}"
 
 	// Cloth Config API for configuration screens
 	// Note: Users need to install Cloth Config separately from Modrinth/CurseForge
-	// Using implementation (not include) so it works in dev but isn't bundled in the JAR
-	// implementation "maven.modrinth:cloth-config:${project.cloth_config_version}"
+	implementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 
 }
 

@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"com.autoshulker.AutoShulkerInventoryClient"
+		],
+		"modmenu": [
+			"com.autoshulker.config.ModMenuIntegration"
 		]
 	},
 	"mixins": [
