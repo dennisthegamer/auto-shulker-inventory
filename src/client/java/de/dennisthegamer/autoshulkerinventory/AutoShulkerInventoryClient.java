@@ -1,13 +1,12 @@
-package com.autoshulker;
+package de.dennisthegamer.autoshulkerinventory;
 
-import com.autoshulker.config.ModConfig;
+import de.dennisthegamer.autoshulkerinventory.config.ModConfig;
 import net.fabricmc.api.ClientModInitializer;
 
 public class AutoShulkerInventoryClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		// Load config on client initialization
-		ModConfig.getInstance();
+		ModConfig.HANDLER.load();
 
 		AutoShulkerInventory.LOGGER.info("Auto Shulker Inventory client initialized!");
 	}

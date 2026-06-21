@@ -1,7 +1,7 @@
-package com.autoshulker.util;
+package de.dennisthegamer.autoshulkerinventory.util;
 
-import com.autoshulker.config.ModConfig;
-import com.autoshulker.config.ParticleStyle;
+import de.dennisthegamer.autoshulkerinventory.config.ModConfig;
+import de.dennisthegamer.autoshulkerinventory.config.ParticleStyle;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.sounds.SoundSource;

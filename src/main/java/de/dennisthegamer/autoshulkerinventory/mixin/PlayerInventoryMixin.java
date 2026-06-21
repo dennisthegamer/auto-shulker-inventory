@@ -1,10 +1,10 @@
-package com.autoshulker.mixin;
+package de.dennisthegamer.autoshulkerinventory.mixin;
 
-import com.autoshulker.AutoShulkerInventory;
-import com.autoshulker.config.ModConfig;
-import com.autoshulker.util.InventoryUtils;
-import com.autoshulker.util.NotificationUtils;
-import com.autoshulker.util.ShulkerUtils;
+import de.dennisthegamer.autoshulkerinventory.AutoShulkerInventory;
+import de.dennisthegamer.autoshulkerinventory.config.ModConfig;
+import de.dennisthegamer.autoshulkerinventory.util.InventoryUtils;
+import de.dennisthegamer.autoshulkerinventory.util.NotificationUtils;
+import de.dennisthegamer.autoshulkerinventory.util.ShulkerUtils;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,6 +1,6 @@
-package com.autoshulker.util;
+package de.dennisthegamer.autoshulkerinventory.util;
 
-import com.autoshulker.config.ModConfig;
+import de.dennisthegamer.autoshulkerinventory.config.ModConfig;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.entity.player.Inventory;

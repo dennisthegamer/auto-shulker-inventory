@@ -1,4 +1,4 @@
-package com.autoshulker;
+package de.dennisthegamer.autoshulkerinventory;
 
 import net.fabricmc.api.ModInitializer;
 

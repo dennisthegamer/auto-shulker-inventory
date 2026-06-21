@@ -1,4 +1,4 @@
-package com.autoshulker.util;
+package de.dennisthegamer.autoshulkerinventory.util;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;

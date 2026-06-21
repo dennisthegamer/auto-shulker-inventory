@@ -1,4 +1,4 @@
-package com.autoshulker.config;
+package de.dennisthegamer.autoshulkerinventory.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
