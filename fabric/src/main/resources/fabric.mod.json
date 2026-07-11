@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "inventory_shulker",
+	"version": "${version}",
+	"name": "Auto Shulker Inventory",
+	"description": "Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 26.2",
+	"authors": [
+		"DennisTheGamer"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/auto-shulker-inventory",
+		"issues": "https://github.com/DennisTheGamer/auto-shulker-inventory/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/inventory_shulker/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"de.dennisthegamer.autoshulkerinventory.fabric.AutoShulkerInventoryFabric"
+		],
+		"client": [
+			"de.dennisthegamer.autoshulkerinventory.fabric.AutoShulkerInventoryFabricClient"
+		],
+		"modmenu": [
+			"de.dennisthegamer.autoshulkerinventory.fabric.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"inventory_shulker.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2-",
+		"java": ">=25",
+		"fabric-api": "*",
+		"yet_another_config_lib_v3": ">=3.9.5"
+	},
+	"suggests": {
+		"modmenu": ">=20.0.0"
+	}
+}
