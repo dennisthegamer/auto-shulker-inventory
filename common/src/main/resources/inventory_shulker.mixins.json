@@ -1,0 +1,18 @@
+{
+	"required": true,
+	"package": "com.autoshulker.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"InventoryMixin",
+		"AbstractContainerMenuMixin"
+	],
+	"client": [
+		"client.AbstractContainerScreenAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

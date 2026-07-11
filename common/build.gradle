@@ -1,0 +1,7 @@
+architectury { common('fabric', 'neoforge') }
+
+dependencies {
+    // compile-time only: @Environment + Mixin lib. Never CALL loader classes from common.
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    modCompileOnly "me.shedaniel.cloth:cloth-config:${rootProject.cloth_config_version}"
+}

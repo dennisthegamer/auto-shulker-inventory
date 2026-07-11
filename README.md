@@ -1,55 +1,83 @@
 # Auto Shulker Inventory
 
-A Minecraft Fabric mod that automatically stores items in shulker boxes when your inventory is full.
+A Minecraft mod for **Fabric and NeoForge** that automatically stores items in shulker boxes when your inventory is full.
 
 ## Features
 
 - Automatically transfers items to shulker boxes when inventory becomes full
-- Works with shift-click operations
-- Server-side processing for multiplayer compatibility
+- Works with shift-click operations, including shulker boxes held by the cursor or inside opened containers
+- Configurable storage priority system (cursor → container → inventory)
+- **Configurable target slot**: choose which inventory slot gets emptied — via config, or by hovering a slot in your inventory and pressing the keybind (default **B**); the selected slot is marked with a green outline
+- In-game config screen (Cloth Config; opened via ModMenu on Fabric or the Mods list on NeoForge)
+- Chat/action-bar notifications and sound effects (each can be toggled)
 - Supports all shulker box variants (colored + undyed)
-- No configuration needed - works out of the box
 
 ## Compatibility
 
-This mod has two branches for different Minecraft versions:
+This branch (`mc1.21.9-1.21.11`) supports **Minecraft 1.21.9 through 1.21.11** on both loaders:
 
-### Branch: `mc1.21-1.21.8`
-- Minecraft 1.21 through 1.21.8
+### Fabric
 - Fabric Loader 0.18.3+
 - Fabric API required
+- Cloth Config required
+- ModMenu (optional, recommended — adds the config button)
 - Java 21+
 
-### Branch: `mc1.21.9-1.21.11`
-- Minecraft 1.21.9 through 1.21.11
-- Fabric Loader 0.18.3+
-- Fabric API required
-- ModMenu 17.0.0-alpha.1+ (optional, recommended)
+### NeoForge
+- NeoForge 21.9+
+- Cloth Config required
 - Java 21+
+
+Other Minecraft versions live on their own branches:
+
+| Branch | Minecraft | Loaders |
+|---|---|---|
+| `mc1.21-1.21.8` | 1.21 – 1.21.8 | Fabric |
+| `mc1.21.9-1.21.11` | 1.21.9 – 1.21.11 | Fabric + NeoForge |
+| `mc26.1` | 26.1 | Fabric |
+| `mc26.2` | 26.2 | Fabric |
 
 ## Download
 
 Download the latest release from [Modrinth](https://modrinth.com/mod/auto-shulker-inventory) or [GitHub Releases](https://github.com/DennisTheGamer/auto-shulker-inventory/releases).
 
-Make sure to download the correct version for your Minecraft version:
-- `auto_shulker_inventory-1.1.0-mc1.21-1.21.8.jar` for Minecraft 1.21-1.21.8
-- `auto_shulker_inventory-1.1.0-mc1.21.9-1.21.11.jar` for Minecraft 1.21.9-1.21.11
+Make sure to download the JAR matching your Minecraft version **and** mod loader, e.g. for 1.21.9-1.21.11:
+- `auto_shulker_inventory-fabric-<version>.jar` for Fabric
+- `auto_shulker_inventory-neoforge-<version>.jar` for NeoForge
 
 ## Installation
 
+### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
-2. Download [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download Auto Shulker Inventory (this mod)
-4. Place both JAR files in your `mods` folder
+2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [Cloth Config](https://modrinth.com/mod/cloth-config)
+3. Download Auto Shulker Inventory (the `-fabric` JAR)
+4. Place the JAR files in your `mods` folder
+5. Launch Minecraft
+
+### NeoForge
+1. Install [NeoForge](https://neoforged.net/)
+2. Download [Cloth Config](https://modrinth.com/mod/cloth-config)
+3. Download Auto Shulker Inventory (the `-neoforge` JAR)
+4. Place the JAR files in your `mods` folder
 5. Launch Minecraft
 
 ## How It Works
 
 When your inventory is full and you pick up items or shift-click items:
-1. The mod checks if there are any shulker boxes in your inventory with available space
+1. The mod checks if there are any shulker boxes with available space (cursor, opened container, then your inventory — each priority can be toggled in the config)
 2. If found, it automatically stores the overflow items in the shulker box
 3. Items are stacked efficiently before being stored
-4. You'll see a log message indicating items were auto-stored
+4. You'll see an action-bar message indicating how many items were auto-stored
+
+### Target slot
+
+By default the mod picks the slot to empty automatically. To always keep a specific slot free, either set "Preferred Target Slot" in the config (-1 = automatic, 0-8 = hotbar, 9-35 = main inventory), or hover the slot in your inventory screen and press **B** (rebindable in Options → Controls, category "Auto Shulker Inventory"). Press **B** on the same slot again to switch back to automatic. The configured slot is marked with a green outline. If the configured slot can't be emptied (it holds a shulker box, or its item fits in no box), the mod falls back to automatic selection.
+
+## Configuration
+
+Settings are stored in `config/auto_shulker_inventory.json` and can be edited in-game:
+- **Fabric:** ModMenu → Auto Shulker Inventory → Config
+- **NeoForge:** Mods → Auto Shulker Inventory → Config
 
 ## Building from Source
 
@@ -58,16 +86,14 @@ When your inventory is full and you pick up items or shift-click items:
 git clone https://github.com/DennisTheGamer/auto-shulker-inventory.git
 cd auto-shulker-inventory
 
-# For Minecraft 1.21-1.21.8
-git checkout mc1.21-1.21.8
-./gradlew build
-
-# For Minecraft 1.21.9-1.21.11
+# For Minecraft 1.21.9-1.21.11 (Fabric + NeoForge)
 git checkout mc1.21.9-1.21.11
 ./gradlew build
 ```
 
-The compiled JAR will be in `build/libs/`.
+The compiled JARs will be in `fabric/build/libs/` and `neoforge/build/libs/`.
+
+For the Fabric-only branches (`mc1.21-1.21.8`, `mc26.1`, `mc26.2`), check out the branch and run `./gradlew build`; the JAR will be in `build/libs/`.
 
 ## License
 
@@ -76,7 +102,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Credits
 
 - **Author**: DennisTheGamer
-- **Built with**: Fabric, Fabric API
+- **Built with**: Architectury Loom, Fabric API, NeoForge, Cloth Config
 - **Icon**: Custom design
 
 ## Support
