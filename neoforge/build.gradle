@@ -1,0 +1,58 @@
+plugins {
+	id 'net.neoforged.moddev'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = "${project.archives_base_name}-neoforge"
+}
+
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(25)
+	withSourcesJar()
+}
+
+repositories {
+	mavenCentral()
+	maven { name = 'NeoForged'; url = 'https://maven.neoforged.net/releases/' }
+	maven { name = 'Xander'; url = 'https://maven.isxander.dev/releases' }
+}
+
+// Shared code lives in common/ and is compiled directly into this jar
+sourceSets.main {
+	java.srcDir rootProject.file('common/src/main/java')
+	resources.srcDir rootProject.file('common/src/main/resources')
+}
+
+neoForge {
+	version = project.neoforge_version
+	runs {
+		client {
+			client()
+			gameDirectory = file('run')
+		}
+	}
+	mods {
+		register(project.mod_id) {
+			sourceSet sourceSets.main
+		}
+	}
+}
+
+dependencies {
+	implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-neoforge"
+}
+
+processResources {
+	def props = [version: project.mod_version, mc: project.minecraft_version]
+	inputs.properties props
+	filesMatching('META-INF/neoforge.mods.toml') { expand props }
+}
+
+jar {
+	from(rootProject.file('LICENSE')) {
+		rename { "${it}_${project.archives_base_name}" }
+	}
+}

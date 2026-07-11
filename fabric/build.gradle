@@ -1,0 +1,63 @@
+plugins {
+	id 'net.fabricmc.fabric-loom'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = "${project.archives_base_name}-fabric"
+}
+
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(25)
+	withSourcesJar()
+}
+
+repositories {
+	mavenCentral()
+	maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+	maven { name = 'Xander'; url = 'https://maven.isxander.dev/releases' }
+	maven {
+		name = 'Modrinth'
+		url = 'https://api.modrinth.com/maven'
+		content { includeGroup 'maven.modrinth' }
+	}
+}
+
+// Shared code lives in common/ and is compiled directly into this jar
+sourceSets.main {
+	java.srcDir rootProject.file('common/src/main/java')
+	resources.srcDir rootProject.file('common/src/main/resources')
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	// No mappings for unobfuscated Minecraft 26.x
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	implementation "maven.modrinth:modmenu:${project.modmenu_version}"
+	implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric"
+}
+
+loom {
+	runs.configureEach {
+		vmArgs "--enable-native-access=ALL-UNNAMED", "--add-opens", "java.base/sun.misc=ALL-UNNAMED"
+	}
+	runs.named('client') {
+		ideConfigGenerated true
+		runDir 'run'
+	}
+}
+
+processResources {
+	def props = [version: project.mod_version, mc: project.minecraft_version, loader: project.loader_version]
+	inputs.properties props
+	filesMatching('fabric.mod.json') { expand props }
+}
+
+jar {
+	from(rootProject.file('LICENSE')) {
+		rename { "${it}_${project.archives_base_name}" }
+	}
+}

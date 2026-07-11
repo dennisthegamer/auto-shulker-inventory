@@ -5,6 +5,26 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-11
+
+### Added
+- **NeoForge Support**: The mod now runs on both Fabric and NeoForge from a single codebase
+  - Restructured into a multiloader layout (`common/`, `fabric/`, `neoforge/`) using fabric-loom and NeoForged ModDev
+  - Shared game logic lives in `common/`; each loader module only contains thin wiring
+  - Releases now ship two jars: `auto_shulker_inventory-fabric-<version>.jar` and `auto_shulker_inventory-neoforge-<version>.jar`
+- **Configurable Target Slot**: Choose which inventory slot gets emptied by auto-storage
+  - New config option "Preferred Target Slot" (`preferredEmptySlot`) in the Priority System category: -1 = automatic (previous behavior), 0-8 = hotbar, 9-35 = main inventory
+  - New keybind (default **B**, category "Auto Shulker Inventory"): hover a slot in your inventory screen and press it to set that slot as the target; press again on the same slot to switch back to automatic
+  - The configured slot is marked with a green outline in the inventory screen
+  - If the configured slot cannot be emptied (holds a shulker box, or the item fits in no box), the mod falls back to automatic slot selection; with debug logging enabled the reason is logged
+
+### Changed
+- Config library switched from Cloth Config to YetAnotherConfigLib (YACL), matching the mc26.2 branch; the config file is now `config/auto_shulker_inventory.json5`
+- GitHub build and release workflows now build and publish both loader jars
+
+### Fixed
+- Action-bar message "Stored X items" used an unsupported `%d` format placeholder that could crash rendering (`TranslatableFormatException`); it now uses `%s`
+
 ## [1.2.2] - 2026-03-26
 
 ### Added

@@ -1,10 +1,15 @@
 pluginManagement {
 	repositories {
-		maven {
-			name = 'Fabric'
-			url = 'https://maven.fabricmc.net/'
-		}
-		mavenCentral()
+		maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+		maven { name = 'NeoForged'; url = 'https://maven.neoforged.net/releases/' }
 		gradlePluginPortal()
+		mavenCentral()
+	}
+	plugins {
+		id 'net.fabricmc.fabric-loom' version "${loom_version}"
+		id 'net.neoforged.moddev' version "${moddev_version}"
 	}
 }
+
+rootProject.name = 'auto_shulker_inventory'
+include 'fabric', 'neoforge'
