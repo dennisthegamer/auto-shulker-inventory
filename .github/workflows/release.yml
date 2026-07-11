@@ -132,8 +132,8 @@ jobs:
 
           ## Build Artifacts
 
-          - `auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}.jar` - Fabric mod file
-          - `auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}.jar` - NeoForge mod file
+          - `auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}-mc${{ needs.build.outputs.minecraft_version }}.jar` - Fabric mod file
+          - `auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}-mc${{ needs.build.outputs.minecraft_version }}.jar` - NeoForge mod file
           - `*-sources.jar` - Source code
 
           ## Recent Commits
@@ -157,7 +157,7 @@ jobs:
           prerelease: false
           body_path: release_body.md
           files: |
-            fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}.jar
-            fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}-sources.jar
-            neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}.jar
-            neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}-sources.jar
+            fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}-mc${{ needs.build.outputs.minecraft_version }}.jar
+            fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}-mc${{ needs.build.outputs.minecraft_version }}-sources.jar
+            neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}-mc${{ needs.build.outputs.minecraft_version }}.jar
+            neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}-mc${{ needs.build.outputs.minecraft_version }}-sources.jar

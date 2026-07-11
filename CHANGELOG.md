@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **NeoForge Support**: The mod now runs on both Fabric and NeoForge from a single codebase
   - Restructured into a multiloader layout (`common/`, `fabric/`, `neoforge/`) using fabric-loom and NeoForged ModDev
   - Shared game logic lives in `common/`; each loader module only contains thin wiring
-  - Releases now ship two jars: `auto_shulker_inventory-fabric-<version>.jar` and `auto_shulker_inventory-neoforge-<version>.jar`
+  - Releases now ship two jars: `auto_shulker_inventory-fabric-<version>-mc<minecraft>.jar` and `auto_shulker_inventory-neoforge-<version>-mc<minecraft>.jar`
 - **Configurable Target Slot**: Choose which inventory slot gets emptied by auto-storage
   - New config option "Preferred Target Slot" (`preferredEmptySlot`) in the Priority System category: -1 = automatic (previous behavior), 0-8 = hotbar, 9-35 = main inventory
   - New keybind (default **B**, category "Auto Shulker Inventory"): hover a slot in your inventory screen and press it to set that slot as the target; press again on the same slot to switch back to automatic
@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Action-bar message "Stored X items" used an unsupported `%d` format placeholder that could crash rendering (`TranslatableFormatException`); it now uses `%s`
 
 ## [1.2.3] - 2026-06-21
-- **Support for Minecraft 26.2** — Updated mappings and dependencies for the latest Minecraft version. No functional changes.
+- **Support for Minecraft 26.2** â€” Updated mappings and dependencies for the latest Minecraft version. No functional changes.
 - **YACL** Change config library from cloth-config to yet another config lib. 
 
 
@@ -100,7 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **Breaking**: Refactored package structure from `com.example.dennisthegamer` to `com.autoshulker`
 - **Breaking**: Changed license from CC0-1.0 to MIT
-- Updated API calls for Minecraft 1.21.9+ (getWorld() → getEntityWorld())
+- Updated API calls for Minecraft 1.21.9+ (getWorld() â†’ getEntityWorld())
 - Consolidated builds into 2 version-specific JARs instead of 12 individual versions
   - `mc1.21-1.21.8.jar`: Compatible with Minecraft 1.21 through 1.21.8
   - `mc1.21.9-1.21.11.jar`: Compatible with Minecraft 1.21.9 through 1.21.11
@@ -143,12 +143,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Minecraft Support | ModMenu | License | Package Name |
 |---------|------------------|---------|---------|--------------|
-| 1.0.0   | 1.21 - 1.21.11   | ❌      | CC0-1.0 | com.example.dennisthegamer |
-| 1.1.0   | 1.21 - 1.21.11   | ✅*     | MIT     | com.autoshulker |
+| 1.0.0   | 1.21 - 1.21.11   | âŒ      | CC0-1.0 | com.example.dennisthegamer |
+| 1.1.0   | 1.21 - 1.21.11   | âœ…*     | MIT     | com.autoshulker |
 
 *ModMenu only included in the 1.21.9-1.21.11 build
 
-## Migration Guide: 1.0.0 → 1.1.0
+## Migration Guide: 1.0.0 â†’ 1.1.0
 
 Due to the package name change, you **must** remove version 1.0.0 before installing 1.1.0:
 
