@@ -21,10 +21,10 @@ public class AutoShulkerInventoryFabricClient implements ClientModInitializer {
 		SlotSelectionHandler.selectSlotKey =
 			KeyBindingHelper.registerKeyBinding(SlotSelectionHandler.createKeyMapping(category));
 
+		// Highlight rendering happens via AbstractContainerScreenRenderMixin in common —
+		// after-render events submit too late for the 1.21.9/1.21.10 GUI pipeline.
 		ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
 			if (screen instanceof InventoryScreen inventoryScreen) {
-				ScreenEvents.afterRender(screen).register((s, graphics, mouseX, mouseY, tickDelta) ->
-					SlotSelectionHandler.renderHighlight(inventoryScreen, graphics));
 				ScreenKeyboardEvents.afterKeyPress(screen).register((s, keyEvent) ->
 					SlotSelectionHandler.handleKeyPress(inventoryScreen, keyEvent));
 			}

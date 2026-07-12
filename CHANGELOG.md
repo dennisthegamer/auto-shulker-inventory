@@ -5,6 +5,11 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-07-12
+
+### Fixed
+- Target-slot highlight (green outline) was invisible on Minecraft 1.21.9 and 1.21.10: the deferred GUI pipeline of these versions ignores draw calls submitted from after-render events (Fabric `ScreenEvents.afterRender` / NeoForge `ScreenEvent.Render.Post`); 1.21.11 changed this behavior, which is why it only worked there. The outline is now drawn from a mixin at the tail of `AbstractContainerScreen.renderContents`, inside the screen render pass, on both loaders. (`render` is not a viable target: `AbstractRecipeBookScreen.render` bypasses it and calls `renderContents` directly.)
+
 ## [1.3.0] - 2026-07-11
 
 ### Added

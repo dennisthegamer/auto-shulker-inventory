@@ -28,7 +28,8 @@ public class AutoShulkerInventoryNeoForgeClient {
 			(mod, parent) -> ConfigScreen.create(parent));
 
 		modBus.addListener(AutoShulkerInventoryNeoForgeClient::onRegisterKeyMappings);
-		NeoForge.EVENT_BUS.addListener(AutoShulkerInventoryNeoForgeClient::onScreenRenderPost);
+		// Highlight rendering happens via AbstractContainerScreenRenderMixin in common —
+		// after-render events submit too late for the 1.21.9/1.21.10 GUI pipeline.
 		NeoForge.EVENT_BUS.addListener(AutoShulkerInventoryNeoForgeClient::onScreenKeyPressed);
 	}
 
@@ -36,12 +37,6 @@ public class AutoShulkerInventoryNeoForgeClient {
 		event.registerCategory(KEY_CATEGORY);
 		SlotSelectionHandler.selectSlotKey = SlotSelectionHandler.createKeyMapping(KEY_CATEGORY);
 		event.register(SlotSelectionHandler.selectSlotKey);
-	}
-
-	private static void onScreenRenderPost(ScreenEvent.Render.Post event) {
-		if (event.getScreen() instanceof InventoryScreen inventoryScreen) {
-			SlotSelectionHandler.renderHighlight(inventoryScreen, event.getGuiGraphics());
-		}
 	}
 
 	private static void onScreenKeyPressed(ScreenEvent.KeyPressed.Pre event) {
