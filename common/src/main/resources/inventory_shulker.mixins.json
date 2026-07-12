@@ -6,6 +6,9 @@
 		"InventoryMixin",
 		"AbstractContainerMenuMixin"
 	],
+	"client": [
+		"client.AbstractContainerScreenAccessor"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	},

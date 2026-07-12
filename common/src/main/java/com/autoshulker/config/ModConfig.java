@@ -3,6 +3,7 @@ package com.autoshulker.config;
 import com.autoshulker.platform.Platforms;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 
 import java.io.File;
 import java.io.FileReader;
@@ -29,6 +30,9 @@ public class ModConfig {
     public boolean enableContainerShulkerPriority = true;  // Priority 2
     public boolean enableInventoryShulkerFallback = true;  // Priority 3
 
+    // Preferred slot to empty during auto-storage (-1 = automatic, 0-8 hotbar, 9-35 main inventory)
+    public int preferredEmptySlot = -1;
+
     // === Additional Options ===
 
     public boolean enableDebugLogging = false;
@@ -53,9 +57,12 @@ public class ModConfig {
             try (FileReader reader = new FileReader(CONFIG_FILE)) {
                 ModConfig config = GSON.fromJson(reader, ModConfig.class);
                 if (config != null) {
+                    if (config.preferredEmptySlot < -1 || config.preferredEmptySlot > 35) {
+                        config.preferredEmptySlot = -1;
+                    }
                     return config;
                 }
-            } catch (IOException e) {
+            } catch (IOException | JsonParseException e) {
                 System.err.println("Failed to load config, using defaults: " + e.getMessage());
             }
         }

@@ -78,6 +78,17 @@ public class ConfigScreen {
             .setSaveConsumer(value -> config.enableInventoryShulkerFallback = value)
             .build());
 
+        prioritySystem.addEntry(entryBuilder.startIntField(
+            Component.translatable("config.auto_shulker_inventory.preferred_empty_slot"),
+            config.preferredEmptySlot
+        )
+            .setDefaultValue(-1)
+            .setMin(-1)
+            .setMax(35)
+            .setTooltip(Component.translatable("config.auto_shulker_inventory.preferred_empty_slot.tooltip"))
+            .setSaveConsumer(value -> config.preferredEmptySlot = value)
+            .build());
+
         // === NOTIFICATIONS & FEEDBACK CATEGORY ===
         ConfigCategory feedback = builder.getOrCreateCategory(
             Component.translatable("config.auto_shulker_inventory.category.feedback")

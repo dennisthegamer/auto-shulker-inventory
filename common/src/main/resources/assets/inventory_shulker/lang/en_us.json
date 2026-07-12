@@ -21,6 +21,9 @@
   "config.auto_shulker_inventory.enable_inventory_fallback": "Inventory Shulker Fallback",
   "config.auto_shulker_inventory.enable_inventory_fallback.tooltip": "Use shulker boxes in player inventory as last resort (Priority 3)",
 
+  "config.auto_shulker_inventory.preferred_empty_slot": "Preferred Target Slot",
+  "config.auto_shulker_inventory.preferred_empty_slot.tooltip": "Which inventory slot to empty when auto-storing. -1 = automatic, 0-8 = hotbar, 9-35 = main inventory",
+
   "config.auto_shulker_inventory.enable_chat_notifications": "Chat Notifications",
   "config.auto_shulker_inventory.enable_chat_notifications.tooltip": "Show chat messages when items are auto-stored",
 
@@ -36,6 +39,12 @@
   "config.auto_shulker_inventory.storage_delay_ticks": "Storage Delay (ticks)",
   "config.auto_shulker_inventory.storage_delay_ticks.tooltip": "Delay before auto-storing items (0 = instant, 20 = 1 second)",
 
-  "message.auto_shulker_inventory.stored_items": "Stored %d items in shulker box",
-  "message.auto_shulker_inventory.no_space": "No space available in shulker boxes"
+  "message.auto_shulker_inventory.stored_items": "Stored %s items in shulker box",
+  "message.auto_shulker_inventory.no_space": "No space available in shulker boxes",
+
+  "key.auto_shulker_inventory.select_target_slot": "Select Target Slot",
+  "key.categories.auto_shulker_inventory": "Auto Shulker Inventory",
+
+  "message.auto_shulker_inventory.target_slot_set": "Target slot set to %s",
+  "message.auto_shulker_inventory.target_slot_reset": "Target slot reset to automatic"
 }
