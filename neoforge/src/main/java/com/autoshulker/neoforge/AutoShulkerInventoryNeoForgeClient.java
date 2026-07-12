@@ -5,7 +5,6 @@ import com.autoshulker.client.SlotSelectionHandler;
 import com.autoshulker.config.ConfigScreen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -17,9 +16,6 @@ import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(value = AutoShulkerInventory.MOD_ID, dist = Dist.CLIENT)
 public class AutoShulkerInventoryNeoForgeClient {
-
-	private static final KeyMapping.Category KEY_CATEGORY = new KeyMapping.Category(
-		Identifier.fromNamespaceAndPath(AutoShulkerInventory.MOD_ID, "main"));
 
 	public AutoShulkerInventoryNeoForgeClient(ModContainer container, IEventBus modBus) {
 		AutoShulkerInventory.initClient();
@@ -34,8 +30,12 @@ public class AutoShulkerInventoryNeoForgeClient {
 	}
 
 	private static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-		event.registerCategory(KEY_CATEGORY);
-		SlotSelectionHandler.selectSlotKey = SlotSelectionHandler.createKeyMapping(KEY_CATEGORY);
+		// Vanilla INVENTORY category instead of a custom one: creating a custom
+		// Category needs the Identifier class, whose mojmap name differs between
+		// 1.21.10 (ResourceLocation) and 1.21.11 (Identifier) — NeoForge jars run
+		// on the runtime version's mojmap names, so any direct reference crashes
+		// on 1.21.9/1.21.10. The Category constants keep their names across all three.
+		SlotSelectionHandler.selectSlotKey = SlotSelectionHandler.createKeyMapping(KeyMapping.Category.INVENTORY);
 		event.register(SlotSelectionHandler.selectSlotKey);
 	}
 

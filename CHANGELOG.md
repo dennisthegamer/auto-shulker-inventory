@@ -5,6 +5,11 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] - 2026-07-12
+
+### Fixed
+- NeoForge jar crashed on Minecraft 1.21.9/1.21.10 with `ClassNotFoundException: net.minecraft.resources.Identifier`: unlike Fabric (which remaps to version-stable intermediary names), NeoForge jars run directly on the Mojang names of the runtime version — and Mojang renamed `ResourceLocation`→`Identifier` and `GuiGraphics.submitOutline`→`renderOutline` between 1.21.10 and 1.21.11. All vanilla symbols referenced by the jar were diffed against the 1.21.9/1.21.10/1.21.11 mappings; exactly these two were affected. The keybind now uses the vanilla "Inventory" category (no `Identifier` needed) and the slot outline is drawn with four `fill()` calls (name-stable across all three versions)
+
 ## [1.3.2] - 2026-07-12
 
 ### Fixed

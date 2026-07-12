@@ -79,9 +79,18 @@ public class SlotSelectionHandler {
         AbstractContainerScreenAccessor accessor = (AbstractContainerScreenAccessor) screen;
         for (Slot slot : screen.getMenu().slots) {
             if (slot.container == minecraft.player.getInventory() && slot.getContainerSlot() == targetSlot) {
-                int x = accessor.autoshulker$getLeftPos() + slot.x;
-                int y = accessor.autoshulker$getTopPos() + slot.y;
-                graphics.renderOutline(x - 1, y - 1, 18, 18, HIGHLIGHT_COLOR);
+                int x0 = accessor.autoshulker$getLeftPos() + slot.x - 1;
+                int y0 = accessor.autoshulker$getTopPos() + slot.y - 1;
+                int x1 = x0 + 18;
+                int y1 = y0 + 18;
+                // Drawn with fill() instead of renderOutline(): NeoForge jars run on
+                // mojmap names of the RUNTIME version, and Mojang renamed the method
+                // between 1.21.10 (submitOutline) and 1.21.11 (renderOutline) —
+                // fill() keeps its name across 1.21.9-1.21.11.
+                graphics.fill(x0, y0, x1, y0 + 1, HIGHLIGHT_COLOR);
+                graphics.fill(x0, y1 - 1, x1, y1, HIGHLIGHT_COLOR);
+                graphics.fill(x0, y0 + 1, x0 + 1, y1 - 1, HIGHLIGHT_COLOR);
+                graphics.fill(x1 - 1, y0 + 1, x1, y1 - 1, HIGHLIGHT_COLOR);
                 return;
             }
         }
