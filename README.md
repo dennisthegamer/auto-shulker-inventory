@@ -1,6 +1,6 @@
 # Auto Shulker Inventory
 
-A Minecraft Fabric mod that automatically stores items in shulker boxes when your inventory is full.
+A Minecraft mod (Fabric and NeoForge) that automatically stores items in shulker boxes when your inventory is full.
 
 ## Features
 
@@ -16,8 +16,7 @@ This mod has two branches for different Minecraft versions:
 
 ### Branch: `mc1.21-1.21.8`
 - Minecraft 1.21 through 1.21.8
-- Fabric Loader 0.18.3+
-- Fabric API required
+- Loaders: Fabric (Loader 0.18.3+, Fabric API required) and NeoForge
 - Java 21+
 
 ### Branch: `mc1.21.9-1.21.11`
@@ -31,17 +30,24 @@ This mod has two branches for different Minecraft versions:
 
 Download the latest release from [Modrinth](https://modrinth.com/mod/auto-shulker-inventory) or [GitHub Releases](https://github.com/DennisTheGamer/auto-shulker-inventory/releases).
 
-Make sure to download the correct version for your Minecraft version:
-- `auto_shulker_inventory-1.1.0-mc1.21-1.21.8.jar` for Minecraft 1.21-1.21.8
-- `auto_shulker_inventory-1.1.0-mc1.21.9-1.21.11.jar` for Minecraft 1.21.9-1.21.11
+Make sure to download the JAR matching your Minecraft version AND your mod loader, e.g.:
+- `auto_shulker_inventory-fabric-<version>.jar` for Fabric
+- `auto_shulker_inventory-neoforge-<version>.jar` for NeoForge
 
 ## Installation
 
+### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download Auto Shulker Inventory (this mod)
+3. Download Auto Shulker Inventory (the `-fabric` JAR)
 4. Place both JAR files in your `mods` folder
 5. Launch Minecraft
+
+### NeoForge
+1. Install [NeoForge](https://neoforged.net/)
+2. Download Auto Shulker Inventory (the `-neoforge` JAR)
+3. Place the JAR in your `mods` folder
+4. Launch Minecraft
 
 ## How It Works
 
@@ -67,7 +73,7 @@ git checkout mc1.21.9-1.21.11
 ./gradlew build
 ```
 
-The compiled JAR will be in `build/libs/`.
+The compiled JARs will be in `fabric/build/libs/` and `neoforge/build/libs/`.
 
 ## License
 
@@ -76,7 +82,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Credits
 
 - **Author**: DennisTheGamer
-- **Built with**: Fabric, Fabric API
+- **Built with**: Architectury Loom (Fabric + NeoForge from one codebase)
 - **Icon**: Custom design
 
 ## Support

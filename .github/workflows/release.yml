@@ -53,7 +53,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts-${{ steps.version.outputs.mod_version }}
-          path: build/libs/
+          path: |
+            fabric/build/libs/
+            neoforge/build/libs/
           retention-days: 7
 
   release:
@@ -72,7 +74,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts-${{ needs.build.outputs.mod_version }}
-          path: build/libs/
+          path: artifacts/
 
       - name: Extract changelog for version
         id: changelog
@@ -121,14 +123,14 @@ jobs:
           ## Compatibility
 
           - **Minecraft:** ${{ needs.build.outputs.minecraft_version }} (supports 1.21 through 1.21.8)
-          - **Fabric Loader:** ${{ needs.build.outputs.loader_version }}+
-          - **Fabric API:** ${{ needs.build.outputs.fabric_version }}
+          - **Loaders:** Fabric (Loader ${{ needs.build.outputs.loader_version }}+ with Fabric API) and NeoForge
           - **Java:** 21+
 
           ## Build Artifacts
 
-          - `auto_shulker_inventory-${{ needs.build.outputs.mod_version }}.jar` - Main mod file (download this)
-          - `auto_shulker_inventory-${{ needs.build.outputs.mod_version }}-sources.jar` - Source code
+          - `auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}.jar` - Fabric mod file
+          - `auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}.jar` - NeoForge mod file
+          - `*-sources.jar` - Source code
 
           ## Recent Commits
 
@@ -136,7 +138,7 @@ jobs:
 
           ---
 
-          **Installation:** Download the main JAR file and place it in your mods folder along with Fabric API.
+          **Installation:** Download the JAR matching your mod loader and place it in your mods folder (on Fabric together with Fabric API).
 
           For detailed installation instructions, see the [README](https://github.com/DennisTheGamer/auto-shulker-inventory/blob/mc1.21-1.21.8/README.md).
           RELEASE_BODY
@@ -151,5 +153,5 @@ jobs:
           prerelease: false
           body_path: release_body.md
           files: |
-            build/libs/auto_shulker_inventory-*.jar
-            build/libs/auto_shulker_inventory-*-sources.jar
+            artifacts/fabric/build/libs/auto_shulker_inventory-fabric-*.jar
+            artifacts/neoforge/build/libs/auto_shulker_inventory-neoforge-*.jar

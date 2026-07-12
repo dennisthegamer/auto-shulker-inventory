@@ -5,6 +5,16 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-12
+
+### Added
+- **NeoForge support**: The mod is now available for NeoForge in addition to Fabric
+- Multiloader project structure (Architectury): shared code lives in `common/`, with thin `fabric/` and `neoforge/` loader modules producing one jar each
+
+### Changed
+- Sources migrated from Yarn to Mojang mappings (required for loader-neutral shared code)
+- Loader-specific functionality (config directory lookup) now goes through a `Platform` service interface with one implementation per loader
+
 ## [1.2.1] - 2025-12-30
 
 ### Added

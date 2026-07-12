@@ -1,0 +1,83 @@
+package com.autoshulker.mixin;
+
+import com.autoshulker.AutoShulkerInventory;
+import com.autoshulker.config.ModConfig;
+import com.autoshulker.util.InventoryUtils;
+import com.autoshulker.util.NotificationUtils;
+import com.autoshulker.util.ShulkerUtils;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(Inventory.class)
+public class InventoryMixin {
+
+    @Inject(method = "add(Lnet/minecraft/world/item/ItemStack;)Z", at = @At("RETURN"))
+    private void onItemAdded(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        // CONFIG CHECK: Only proceed if auto storage is enabled
+        if (!ModConfig.getInstance().enableAutoStorage) {
+            return;
+        }
+
+        Inventory inventory = (Inventory) (Object) this;
+
+        if (inventory.player == null || inventory.player.level().isClientSide()) {
+            return;
+        }
+
+        if (!InventoryUtils.isMainInventoryFull(inventory)) {
+            return;
+        }
+
+        tryMoveToShulker(inventory);
+    }
+
+    private void tryMoveToShulker(Inventory inventory) {
+        int shulkerSlot = ShulkerUtils.findShulkerWithSpace(inventory);
+        if (shulkerSlot == -1) {
+            return;
+        }
+
+        int totalStored = 0;
+
+        for (int i = 35; i >= 0; i--) {
+            if (i == shulkerSlot) {
+                continue;
+            }
+
+            ItemStack itemStack = inventory.getItem(i);
+            if (itemStack.isEmpty() || ShulkerUtils.isShulkerBox(itemStack)) {
+                continue;
+            }
+
+            ItemStack remaining = ShulkerUtils.storeInShulker(inventory, itemStack.copy());
+
+            if (remaining.getCount() < itemStack.getCount()) {
+                int storedCount = itemStack.getCount() - remaining.getCount();
+                totalStored += storedCount;
+                inventory.setItem(i, remaining);
+
+                // CONFIG CHECK: Debug logging
+                if (ModConfig.getInstance().enableDebugLogging) {
+                    AutoShulkerInventory.LOGGER.info("Auto-stored {} items in shulker box", storedCount);
+                }
+
+                if (remaining.isEmpty()) {
+                    break;
+                }
+            }
+
+            if (!ShulkerUtils.hasSpace(inventory.getItem(shulkerSlot))) {
+                break;
+            }
+        }
+
+        // Send notification if items were stored
+        if (totalStored > 0) {
+            NotificationUtils.notifyPlayer(inventory.player, totalStored);
+        }
+    }
+}

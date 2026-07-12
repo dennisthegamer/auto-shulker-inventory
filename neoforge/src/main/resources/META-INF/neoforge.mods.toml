@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/DennisTheGamer/auto-shulker-inventory/issues"
+
+[[mods]]
+modId = "inventory_shulker"
+version = "${version}"
+displayName = "Auto Shulker Inventory"
+displayURL = "https://modrinth.com/mod/auto-shulker-inventory"
+logoFile = "assets/inventory_shulker/icon.png"
+authors = "DennisTheGamer"
+description = '''Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 1.21 through 1.21.8'''
+
+[[mixins]]
+config = "inventory_shulker.mixins.json"
+
+[[dependencies.inventory_shulker]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,21.9)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.inventory_shulker]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,1.21.9)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.inventory_shulker]]
+modId = "cloth_config"
+type = "required"
+versionRange = "[15.0,)"
+ordering = "NONE"
+side = "CLIENT"
