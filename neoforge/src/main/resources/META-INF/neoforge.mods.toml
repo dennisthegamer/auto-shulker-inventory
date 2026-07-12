@@ -30,8 +30,10 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.inventory_shulker]]
+# Cloth Config only adopted MC-based version numbers with 21.11 (MC 1.21.11);
+# on MC 1.21.9/1.21.10 the current Cloth line is 20.0.x.
 modId = "cloth_config"
 type = "required"
-versionRange = "[21.9,)"
+versionRange = "[20.0,)"
 ordering = "NONE"
 side = "CLIENT"

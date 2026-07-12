@@ -5,6 +5,11 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2026-07-12
+
+### Fixed
+- NeoForge jar refused to load on Minecraft 1.21.9/1.21.10 with an up-to-date Cloth Config: the declared dependency range `[21.9,)` assumed Cloth Config uses Minecraft-based version numbers, but Cloth only switched to that scheme with 21.11 (MC 1.21.11) — on 1.21.9/1.21.10 the current Cloth line is 20.0.x. The range is now `[20.0,)`
+
 ## [1.3.1] - 2026-07-12
 
 ### Fixed
