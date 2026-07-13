@@ -126,8 +126,8 @@ jobs:
           ## Compatibility
 
           - **Minecraft:** ${{ needs.build.outputs.minecraft_version }} (supports 1.21.9 through 1.21.11)
-          - **Fabric:** Fabric Loader ${{ needs.build.outputs.loader_version }}+, Fabric API ${{ needs.build.outputs.fabric_version }}, Cloth Config
-          - **NeoForge:** ${{ needs.build.outputs.neoforge_version }}+, Cloth Config
+          - **Fabric:** Fabric Loader ${{ needs.build.outputs.loader_version }}+, Fabric API ${{ needs.build.outputs.fabric_version }}, YetAnotherConfigLib
+          - **NeoForge:** ${{ needs.build.outputs.neoforge_version }}+, YetAnotherConfigLib
           - **Java:** 21+
 
           ## Build Artifacts
@@ -142,7 +142,7 @@ jobs:
 
           ---
 
-          **Installation:** Download the JAR matching your mod loader and place it in your mods folder. On Fabric you also need Fabric API and Cloth Config; on NeoForge you need Cloth Config.
+          **Installation:** Download the JAR matching your mod loader and place it in your mods folder. On Fabric you also need Fabric API and YetAnotherConfigLib; on NeoForge you need YetAnotherConfigLib.
 
           For detailed installation instructions, see the [README](https://github.com/DennisTheGamer/auto-shulker-inventory/blob/mc1.21.9-1.21.11/README.md).
           RELEASE_BODY

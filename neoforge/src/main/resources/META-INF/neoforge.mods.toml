@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "Auto Shulker Inventory"
 displayURL = "https://modrinth.com/mod/auto-shulker-inventory"
 logoFile = "assets/inventory_shulker/icon.png"
-authors = "DennisTheGamer"
+authors = "Dennis_thegamer"
 description = '''Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 1.21.9 through 1.21.11'''
 
 [[mixins]]
@@ -30,10 +30,8 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.inventory_shulker]]
-# Cloth Config only adopted MC-based version numbers with 21.11 (MC 1.21.11);
-# on MC 1.21.9/1.21.10 the current Cloth line is 20.0.x.
-modId = "cloth_config"
+modId = "yet_another_config_lib_v3"
 type = "required"
-versionRange = "[20.0,)"
+versionRange = "[3.8.1,)"
 ordering = "NONE"
 side = "CLIENT"

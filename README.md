@@ -8,7 +8,7 @@ A Minecraft mod for **Fabric and NeoForge** that automatically stores items in s
 - Works with shift-click operations, including shulker boxes held by the cursor or inside opened containers
 - Configurable storage priority system (cursor → container → inventory)
 - **Configurable target slot**: choose which inventory slot gets emptied — via config, or by hovering a slot in your inventory and pressing the keybind (default **B**); the selected slot is marked with a green outline
-- In-game config screen (Cloth Config; opened via ModMenu on Fabric or the Mods list on NeoForge)
+- In-game config screen (YetAnotherConfigLib; opened via ModMenu on Fabric or the Mods list on NeoForge)
 - Chat/action-bar notifications and sound effects (each can be toggled)
 - Supports all shulker box variants (colored + undyed)
 
@@ -19,13 +19,13 @@ This branch (`mc1.21.9-1.21.11`) supports **Minecraft 1.21.9 through 1.21.11** o
 ### Fabric
 - Fabric Loader 0.18.3+
 - Fabric API required
-- Cloth Config required
+- YetAnotherConfigLib (YACL) required
 - ModMenu (optional, recommended — adds the config button)
 - Java 21+
 
 ### NeoForge
 - NeoForge 21.9+
-- Cloth Config required
+- YetAnotherConfigLib (YACL) required
 - Java 21+
 
 Other Minecraft versions live on their own branches:
@@ -49,14 +49,14 @@ Make sure to download the JAR matching your Minecraft version **and** mod loader
 
 ### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
-2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [Cloth Config](https://modrinth.com/mod/cloth-config)
+2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
 3. Download Auto Shulker Inventory (the `-fabric` JAR)
 4. Place the JAR files in your `mods` folder
 5. Launch Minecraft
 
 ### NeoForge
 1. Install [NeoForge](https://neoforged.net/)
-2. Download [Cloth Config](https://modrinth.com/mod/cloth-config)
+2. Download [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
 3. Download Auto Shulker Inventory (the `-neoforge` JAR)
 4. Place the JAR files in your `mods` folder
 5. Launch Minecraft
@@ -102,7 +102,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Credits
 
 - **Author**: DennisTheGamer
-- **Built with**: Architectury Loom, Fabric API, NeoForge, Cloth Config
+- **Built with**: Architectury Loom, Fabric API, NeoForge, YetAnotherConfigLib
 - **Icon**: Custom design
 
 ## Support
