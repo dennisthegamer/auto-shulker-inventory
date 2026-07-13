@@ -5,7 +5,7 @@
 	"name": "Auto Shulker Inventory",
 	"description": "Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 1.21 through 1.21.8",
 	"authors": [
-		"DennisTheGamer"
+		"Dennis_thegamer"
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/auto-shulker-inventory",
@@ -16,13 +16,13 @@
 	"environment": "client",
 	"entrypoints": {
 		"main": [
-			"com.autoshulker.fabric.AutoShulkerInventoryFabric"
+			"de.dennisthegamer.autoshulkerinventory.fabric.AutoShulkerInventoryFabric"
 		],
 		"client": [
-			"com.autoshulker.fabric.AutoShulkerInventoryFabricClient"
+			"de.dennisthegamer.autoshulkerinventory.fabric.AutoShulkerInventoryFabricClient"
 		],
 		"modmenu": [
-			"com.autoshulker.fabric.ModMenuIntegration"
+			"de.dennisthegamer.autoshulkerinventory.fabric.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -32,9 +32,10 @@
 		"fabricloader": ">=0.18.3",
 		"minecraft": ">=1.21 <=1.21.8",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"yet_another_config_lib_v3": ">=3.8.1"
 	},
 	"suggests": {
-		"cloth-config": ">=15.0.0"
+		"modmenu": ">=15.0.0"
 	}
 }

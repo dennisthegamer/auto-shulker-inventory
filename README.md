@@ -17,6 +17,7 @@ This mod has two branches for different Minecraft versions:
 ### Branch: `mc1.21-1.21.8`
 - Minecraft 1.21 through 1.21.8
 - Loaders: Fabric (Loader 0.18.3+, Fabric API required) and NeoForge
+- YetAnotherConfigLib (YACL) required
 - Java 21+
 
 ### Branch: `mc1.21.9-1.21.11`
@@ -38,16 +39,17 @@ Make sure to download the JAR matching your Minecraft version AND your mod loade
 
 ### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
-2. Download [Fabric API](https://modrinth.com/mod/fabric-api)
+2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
 3. Download Auto Shulker Inventory (the `-fabric` JAR)
 4. Place both JAR files in your `mods` folder
 5. Launch Minecraft
 
 ### NeoForge
 1. Install [NeoForge](https://neoforged.net/)
-2. Download Auto Shulker Inventory (the `-neoforge` JAR)
-3. Place the JAR in your `mods` folder
-4. Launch Minecraft
+2. Download [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
+3. Download Auto Shulker Inventory (the `-neoforge` JAR)
+4. Place both JAR files in your `mods` folder
+5. Launch Minecraft
 
 ## How It Works
 
