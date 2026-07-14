@@ -32,18 +32,23 @@ Other Minecraft versions live on their own branches:
 
 | Branch | Minecraft | Loaders |
 |---|---|---|
-| `mc1.21-1.21.8` | 1.21 – 1.21.8 | Fabric |
+| `mc1.21-1.21.8` | 1.21 – 1.21.8 | Fabric + NeoForge |
 | `mc1.21.9-1.21.11` | 1.21.9 – 1.21.11 | Fabric + NeoForge |
-| `mc26.1` | 26.1 | Fabric |
-| `mc26.2` | 26.2 | Fabric |
+| `mc26.1` | 26.1 – 26.1.2 | Fabric + NeoForge |
+| `mc26.2` | 26.2 | Fabric + NeoForge |
 
 ## Download
 
 Download the latest release from [Modrinth](https://modrinth.com/mod/auto-shulker-inventory) or [GitHub Releases](https://github.com/DennisTheGamer/auto-shulker-inventory/releases).
 
-Make sure to download the JAR matching your Minecraft version **and** mod loader, e.g. for 1.21.9-1.21.11:
-- `auto_shulker_inventory-fabric-<version>.jar` for Fabric
-- `auto_shulker_inventory-neoforge-<version>.jar` for NeoForge
+Pick the JAR that matches your Minecraft version **and** your mod loader (`fabric` or `neoforge`):
+
+| Minecraft | Fabric | NeoForge |
+|---|---|---|
+| 1.21 – 1.21.8 | `auto_shulker_inventory-fabric-1.5.0+mc1.21-1.21.8.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc1.21-1.21.8.jar` |
+| 1.21.9 – 1.21.11 | `auto_shulker_inventory-fabric-1.5.0+mc1.21.9-1.21.11.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc1.21.9-1.21.11.jar` |
+| 26.1 – 26.1.2 | `auto_shulker_inventory-fabric-1.5.0+mc26.1-26.1.2.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc26.1-26.1.2.jar` |
+| 26.2 | `auto_shulker_inventory-fabric-1.5.0+mc26.2.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc26.2.jar` |
 
 ## Installation
 
@@ -93,7 +98,7 @@ git checkout mc1.21.9-1.21.11
 
 The compiled JARs will be in `fabric/build/libs/` and `neoforge/build/libs/`.
 
-For the Fabric-only branches (`mc1.21-1.21.8`, `mc26.1`, `mc26.2`), check out the branch and run `./gradlew build`; the JAR will be in `build/libs/`.
+For any other Minecraft version, check out its branch (see the compatibility table above) and run `./gradlew build`; both loader JARs are produced the same way.
 
 ## License
 
@@ -101,7 +106,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-- **Author**: DennisTheGamer
+- **Author**: Dennis_thegamer
 - **Built with**: Architectury Loom, Fabric API, NeoForge, YetAnotherConfigLib
 - **Icon**: Custom design
 

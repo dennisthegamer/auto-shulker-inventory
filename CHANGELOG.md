@@ -5,6 +5,13 @@ All notable changes to Auto Shulker Inventory will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-07-14
+
+### Changed
+- Unified the version number across all loaders and Minecraft versions — every branch now builds as `1.5.0`
+- Standardized release jar naming to `auto_shulker_inventory-<loader>-<version>+mc<range>` (e.g. `auto_shulker_inventory-fabric-1.5.0+mc1.21.9-1.21.11.jar`)
+- Corrected author and contact metadata (Modrinth page and GitHub links) across the mod and its documentation
+
 ## [1.3.3] - 2026-07-12
 
 ### Fixed
@@ -26,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **NeoForge Support**: The mod now runs on both Fabric and NeoForge from a single codebase
   - Restructured into an Architectury multiloader layout (`common/`, `fabric/`, `neoforge/`)
   - Shared game logic lives in `common/`; each loader module only contains thin wiring
-  - Releases now ship two jars: `auto_shulker_inventory-fabric-<version>.jar` and `auto_shulker_inventory-neoforge-<version>.jar`
+  - Releases now ship two jars: `auto_shulker_inventory-fabric-<version>+mc<range>.jar` and `auto_shulker_inventory-neoforge-<version>+mc<range>.jar`
 - **Configurable Target Slot**: Choose which inventory slot gets emptied by auto-storage
   - New config option "Preferred Target Slot" (`preferredEmptySlot`) in the Priority System category: -1 = automatic (previous behavior), 0-8 = hotbar, 9-35 = main inventory
   - New keybind (default **B**, category "Auto Shulker Inventory"): hover a slot in your inventory screen and press it to set that slot as the target; press again on the same slot to switch back to automatic
@@ -153,8 +160,8 @@ Due to the package name change, you **must** remove version 1.0.0 before install
 1. Stop your Minecraft client/server
 2. Remove `auto_shulker_inventory-1.0.0.jar` from your mods folder
 3. Download the correct 1.1.0 version for your Minecraft version:
-   - For MC 1.21-1.21.8: `auto_shulker_inventory-1.1.0-mc1.21-1.21.8.jar`
-   - For MC 1.21.9-1.21.11: `auto_shulker_inventory-1.1.0-mc1.21.9-1.21.11.jar`
+   - For MC 1.21-1.21.8: `auto_shulker_inventory-fabric-1.1.0+mc1.21-1.21.8.jar`
+   - For MC 1.21.9-1.21.11: `auto_shulker_inventory-fabric-1.1.0+mc1.21.9-1.21.11.jar`
 4. Place the new JAR in your mods folder
 5. Start Minecraft
 
