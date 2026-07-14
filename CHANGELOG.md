@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Auto Shulker Inventory will be documented in this file.
+All notable changes to Auto Shulker Inventory Loader will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Configurable Target Slot** (ported from the mc1.21.9-1.21.11 branch): Choose which inventory slot gets emptied by auto-storage
   - New config option "Preferred Target Slot" (`preferredEmptySlot`) in the Priority System category: -1 = automatic (previous behavior), 0-8 = hotbar, 9-35 = main inventory
-  - New keybind (default **B**, category "Auto Shulker Inventory"): hover a slot in your inventory screen and press it to set that slot as the target; press again on the same slot to switch back to automatic
+  - New keybind (default **B**, category "Auto Shulker Inventory Loader"): hover a slot in your inventory screen and press it to set that slot as the target; press again on the same slot to switch back to automatic
   - The configured slot is marked with a green outline in the inventory screen
   - If the configured slot cannot be emptied, the mod falls back to automatic slot selection
 - Unlike on 1.21.9+, the outline is drawn via the loader after-render screen events — the 1.21-1.21.8 GUI pipelines still display those submissions (verified in-game on 1.21.8), and no mixin target for the alternative approach exists across the whole 1.21-1.21.8 range

@@ -1,4 +1,4 @@
-# Auto Shulker Inventory
+# Auto Shulker Inventory Loader
 
 A Minecraft mod (Fabric and NeoForge) that automatically stores items in shulker boxes when your inventory is full.
 
@@ -53,14 +53,14 @@ Pick the JAR that matches your Minecraft version **and** your mod loader (`fabri
 ### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
-3. Download Auto Shulker Inventory (the `-fabric` JAR)
+3. Download Auto Shulker Inventory Loader (the `-fabric` JAR)
 4. Place both JAR files in your `mods` folder
 5. Launch Minecraft
 
 ### NeoForge
 1. Install [NeoForge](https://neoforged.net/)
 2. Download [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
-3. Download Auto Shulker Inventory (the `-neoforge` JAR)
+3. Download Auto Shulker Inventory Loader (the `-neoforge` JAR)
 4. Place both JAR files in your `mods` folder
 5. Launch Minecraft
 
