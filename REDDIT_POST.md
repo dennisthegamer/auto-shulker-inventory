@@ -1,4 +1,4 @@
-# [MOD RELEASE] Auto Shulker Inventory - Never worry about a full inventory again!
+# [MOD RELEASE] Auto Shulker Inventory Loader - Never worry about a full inventory again!
 
 Hey everyone!
 

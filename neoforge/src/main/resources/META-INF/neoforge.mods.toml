@@ -6,7 +6,7 @@ issueTrackerURL = "https://github.com/DennisTheGamer/auto-shulker-inventory/issu
 [[mods]]
 modId = "inventory_shulker"
 version = "${version}"
-displayName = "Auto Shulker Inventory"
+displayName = "Auto Shulker Inventory Loader"
 displayURL = "https://modrinth.com/mod/auto-shulker-inventory"
 logoFile = "assets/inventory_shulker/icon.png"
 authors = "Dennis_thegamer"

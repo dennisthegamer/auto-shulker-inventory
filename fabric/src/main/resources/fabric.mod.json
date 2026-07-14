@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "inventory_shulker",
 	"version": "${version}",
-	"name": "Auto Shulker Inventory",
+	"name": "Auto Shulker Inventory Loader",
 	"description": "Automatically stores items in shulker boxes when inventory is full. Compatible with Minecraft 26.2",
 	"authors": [
 		"Dennis_thegamer"

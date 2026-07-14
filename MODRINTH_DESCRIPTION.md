@@ -1,4 +1,4 @@
-# 📦 Auto Shulker Inventory
+# 📦 Auto Shulker Inventory Loader
 
 **Never worry about a full inventory again!** This lightweight Fabric & NeoForge mod automatically organizes overflow items into shulker boxes in your inventory, keeping your gameplay smooth and uninterrupted.
 

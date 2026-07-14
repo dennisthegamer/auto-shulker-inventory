@@ -11,7 +11,7 @@ public class AutoShulkerInventory {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static void init() {
-		LOGGER.info("Auto Shulker Inventory initialized!");
+		LOGGER.info("Auto Shulker Inventory Loader initialized!");
 		LOGGER.info("Items will automatically be stored in shulker boxes when inventory is full.");
 	}
 
@@ -19,6 +19,6 @@ public class AutoShulkerInventory {
 		// Load config on client initialization
 		ModConfig.loadAndValidate();
 
-		LOGGER.info("Auto Shulker Inventory client initialized!");
+		LOGGER.info("Auto Shulker Inventory Loader client initialized!");
 	}
 }

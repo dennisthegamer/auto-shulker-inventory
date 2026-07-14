@@ -1,4 +1,4 @@
-# Auto Shulker Inventory - Showcase Script
+# Auto Shulker Inventory Loader - Showcase Script
 
 ---
 
@@ -8,13 +8,13 @@
 
 [calm] But don't worry, my friend. Because today I'm showing you a mod that will change your Minecraft life forever.
 
-[excited] Auto Shulker Inventory! Version 1.5.0. The mod that takes your inventory management to a whole new level. Developed by Dennis_thegamer, [impressed] an absolute gigachad of the Fabric modding scene.
+[excited] Auto Shulker Inventory Loader! Version 1.5.0. The mod that takes your inventory management to a whole new level. Developed by Dennis_thegamer, [impressed] an absolute gigachad of the Fabric modding scene.
 
 [calm] This mod does exactly what the name promises: It automatically stores your items in shulker boxes when your inventory is full. [satisfied] No more manual fumbling. No more stress. Just pure efficiency.
 
 [excited] Let's see this thing in action! Here I have my inventory, completely full. And here's a pile of cobblestone on the ground.
 
-[nervous] In vanilla Minecraft, you'd be frantically scrolling through your inventory trying to throw something away. [calm] But with Auto Shulker Inventory? You just walk over it, and [excited] BAM! The items automatically go into your shulker box.
+[nervous] In vanilla Minecraft, you'd be frantically scrolling through your inventory trying to throw something away. [calm] But with Auto Shulker Inventory Loader? You just walk over it, and [excited] BAM! The items automatically go into your shulker box.
 
 [whispers] This isn't witchcraft... [normal] it's just genius.
 
@@ -44,7 +44,7 @@ Server-side processing means everything stays properly synchronized. No desync i
 
 Red, blue, green, purple, pink, [sarcastically] that weird lime color nobody uses... [laughs] they all work. Even the undyed default shulker. [calm] This mod doesn't discriminate.
 
-[upbeat] Installation is super easy! Install Fabric Loader. Download Fabric API. Download Auto Shulker Inventory from Modrinth or GitHub. Drop both JARs into your mods folder. Launch Minecraft. [excited] Profit!
+[upbeat] Installation is super easy! Install Fabric Loader. Download Fabric API. Download Auto Shulker Inventory Loader from Modrinth or GitHub. Drop both JARs into your mods folder. Launch Minecraft. [excited] Profit!
 
 [calm] For Minecraft 1.21.9 and higher, you can optionally also install ModMenu to get the fancy config screen.
 
@@ -52,7 +52,7 @@ The mod is compatible with Minecraft 1.21 through 1.21.11, Fabric Loader 0.18.3 
 
 There are two versions: One for Minecraft 1.21 through 1.21.8, and one for 1.21.9 through 1.21.11. Just check which Minecraft version you're playing and download the right one. [sarcastically] It's not rocket science.
 
-[sincere] So if you're tired of leaving items on the ground, if you're done constantly managing your inventory, and if you just want to grind in peace... [excited] then Auto Shulker Inventory is the mod for you.
+[sincere] So if you're tired of leaving items on the ground, if you're done constantly managing your inventory, and if you just want to grind in peace... [excited] then Auto Shulker Inventory Loader is the mod for you.
 
 Link is in the description. Modrinth, GitHub, pick wherever you want to download it.
 
@@ -76,7 +76,7 @@ Link is in the description. Modrinth, GitHub, pick wherever you want to download
 
 ## Technical Info for the Description
 
-**Mod Name:** Auto Shulker Inventory
+**Mod Name:** Auto Shulker Inventory Loader
 **Version:** 1.5.0
 **Author:** Dennis_thegamer
 **License:** MIT
@@ -89,7 +89,7 @@ Link is in the description. Modrinth, GitHub, pick wherever you want to download
 
 ```
 0:00 - Intro
-0:15 - What is Auto Shulker Inventory?
+0:15 - What is Auto Shulker Inventory Loader?
 0:35 - Auto-Storage Demo
 1:00 - Shift-Click Support
 1:25 - Priority System Explained
