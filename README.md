@@ -1,46 +1,69 @@
 # Auto Shulker Inventory
 
-A Minecraft Fabric mod that automatically stores items in shulker boxes when your inventory is full.
+A Minecraft mod for **Fabric and NeoForge** that automatically stores items in shulker boxes when your inventory is full.
 
 ## Features
 
 - Automatically transfers items to shulker boxes when inventory becomes full
-- Works with shift-click operations
-- Server-side processing for multiplayer compatibility
+- Works with shift-click operations, including shulker boxes held by the cursor or inside opened containers
+- Configurable storage priority system (cursor -> container -> inventory)
+- **Configurable target slot**: choose which inventory slot gets emptied — via config, or by hovering a slot in your inventory and pressing the keybind (default **B**); the selected slot is marked with a green outline
+- In-game config screen (YetAnotherConfigLib; opened via ModMenu on Fabric or the Mods list on NeoForge)
+- Chat/action-bar notifications and sound effects (each can be toggled)
 - Supports all shulker box variants (colored + undyed)
-- No configuration needed - works out of the box
 
 ## Compatibility
 
-This mod has two branches for different Minecraft versions:
+This branch (`mc26.1`) supports **Minecraft 26.1 – 26.1.2** on both loaders:
 
-### Branch: `mc1.21-1.21.8`
-- Minecraft 1.21 through 1.21.8
-- Fabric Loader 0.18.3+
+### Fabric
+- Fabric Loader 0.19.3+
 - Fabric API required
-- Java 21+
+- YetAnotherConfigLib (YACL) required
+- ModMenu (optional, recommended — adds the config button)
+- Java 25+
 
-### Branch: `mc1.21.9-1.21.11`
-- Minecraft 1.21.9 through 1.21.11
-- Fabric Loader 0.18.3+
-- Fabric API required
-- ModMenu 17.0.0-alpha.1+ (optional, recommended)
-- Java 21+
+### NeoForge
+- NeoForge 26.1.2+ (Minecraft 26.1 / 26.1.1 are supported on Fabric only)
+- YetAnotherConfigLib (YACL) required
+- Java 25+
+
+Other Minecraft versions live on their own branches:
+
+| Branch | Minecraft | Loaders |
+|---|---|---|
+| `mc1.21-1.21.8` | 1.21 – 1.21.8 | Fabric + NeoForge |
+| `mc1.21.9-1.21.11` | 1.21.9 – 1.21.11 | Fabric + NeoForge |
+| `mc26.1` | 26.1 – 26.1.2 | Fabric + NeoForge |
+| `mc26.2` | 26.2 | Fabric + NeoForge |
 
 ## Download
 
 Download the latest release from [Modrinth](https://modrinth.com/mod/auto-shulker-inventory) or [GitHub Releases](https://github.com/DennisTheGamer/auto-shulker-inventory/releases).
 
-Make sure to download the correct version for your Minecraft version:
-- `auto_shulker_inventory-1.1.0-mc1.21-1.21.8.jar` for Minecraft 1.21-1.21.8
-- `auto_shulker_inventory-1.1.0-mc1.21.9-1.21.11.jar` for Minecraft 1.21.9-1.21.11
+Pick the JAR that matches your Minecraft version **and** your mod loader (`fabric` or `neoforge`):
+
+| Minecraft | Fabric | NeoForge |
+|---|---|---|
+| 1.21 – 1.21.8 | `auto_shulker_inventory-fabric-1.5.0+mc1.21-1.21.8.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc1.21-1.21.8.jar` |
+| 1.21.9 – 1.21.11 | `auto_shulker_inventory-fabric-1.5.0+mc1.21.9-1.21.11.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc1.21.9-1.21.11.jar` |
+| 26.1 – 26.1.2 | `auto_shulker_inventory-fabric-1.5.0+mc26.1-26.1.2.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc26.1-26.1.2.jar` |
+| 26.2 | `auto_shulker_inventory-fabric-1.5.0+mc26.2.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc26.2.jar` |
 
 ## Installation
 
+### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
-2. Download [Fabric API](https://modrinth.com/mod/fabric-api)
-3. Download Auto Shulker Inventory (this mod)
-4. Place both JAR files in your `mods` folder
+2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
+3. Download Auto Shulker Inventory (the `-fabric` JAR)
+4. Place the JAR files in your `mods` folder
+5. Launch Minecraft
+
+### NeoForge
+1. Install [NeoForge](https://neoforged.net/)
+2. Download [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
+3. Download Auto Shulker Inventory (the `-neoforge` JAR)
+4. Place the JAR files in your `mods` folder
 5. Launch Minecraft
 
 ## How It Works
@@ -58,16 +81,14 @@ When your inventory is full and you pick up items or shift-click items:
 git clone https://github.com/DennisTheGamer/auto-shulker-inventory.git
 cd auto-shulker-inventory
 
-# For Minecraft 1.21-1.21.8
-git checkout mc1.21-1.21.8
-./gradlew build
+# Check out the branch for your target Minecraft version, e.g.:
+git checkout mc26.1
 
-# For Minecraft 1.21.9-1.21.11
-git checkout mc1.21.9-1.21.11
+# Build both loader jars
 ./gradlew build
 ```
 
-The compiled JAR will be in `build/libs/`.
+The compiled JARs will be in `fabric/build/libs/` and `neoforge/build/libs/`.
 
 ## License
 
@@ -75,8 +96,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-- **Author**: DennisTheGamer
-- **Built with**: Fabric, Fabric API
+- **Author**: Dennis_thegamer
+- **Built with**: Fabric, NeoForge, Fabric API
 - **Icon**: Custom design
 
 ## Support
