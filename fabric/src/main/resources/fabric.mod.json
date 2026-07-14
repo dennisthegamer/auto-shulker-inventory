@@ -33,7 +33,7 @@
 		"minecraft": ">=1.21.9 <=1.21.11",
 		"java": ">=21",
 		"fabric-api": "*",
-		"yet_another_config_lib_v3": ">=3.8.1"
+		"yet_another_config_lib_v3": ">=3.8.0"
 	},
 	"suggests": {
 		"modmenu": ">=17.0.0"

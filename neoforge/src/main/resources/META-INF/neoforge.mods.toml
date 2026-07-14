@@ -32,6 +32,6 @@ side = "BOTH"
 [[dependencies.inventory_shulker]]
 modId = "yet_another_config_lib_v3"
 type = "required"
-versionRange = "[3.8.1,)"
+versionRange = "[3.8.0,)"
 ordering = "NONE"
 side = "CLIENT"

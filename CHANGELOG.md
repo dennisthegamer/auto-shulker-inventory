@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.5.0] - 2026-07-14
 
+### Fixed
+- On Minecraft 1.21.9 the mod refused to load with "requires YetAnotherConfigLib 3.8.1 or later": 1.21.9's Fabric API line caps out below the version YACL 3.8.1/3.8.2 require (those ship for 1.21.10+), so 3.8.0 is the newest YACL that runs on a stock 1.21.9 instance. The mod only uses YACL's stable core builder API (present since 3.0), so the dependency floor is relaxed to `>=3.8.0` (Fabric and NeoForge) to cover 1.21.9 through 1.21.11
+
 ### Changed
 - Unified the version number across all loaders and Minecraft versions — every branch now builds as `1.5.0`
 - Standardized release jar naming to `auto_shulker_inventory-<loader>-<version>+mc<range>` (e.g. `auto_shulker_inventory-fabric-1.5.0+mc1.21.9-1.21.11.jar`)
