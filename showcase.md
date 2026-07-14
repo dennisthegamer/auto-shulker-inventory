@@ -8,7 +8,7 @@
 
 [calm] But don't worry, my friend. Because today I'm showing you a mod that will change your Minecraft life forever.
 
-[excited] Auto Shulker Inventory! Version 1.2.1. The mod that takes your inventory management to a whole new level. Developed by DennisTheGamer, [impressed] an absolute gigachad of the Fabric modding scene.
+[excited] Auto Shulker Inventory! Version 1.5.0. The mod that takes your inventory management to a whole new level. Developed by Dennis_thegamer, [impressed] an absolute gigachad of the Fabric modding scene.
 
 [calm] This mod does exactly what the name promises: It automatically stores your items in shulker boxes when your inventory is full. [satisfied] No more manual fumbling. No more stress. Just pure efficiency.
 
@@ -77,8 +77,8 @@ Link is in the description. Modrinth, GitHub, pick wherever you want to download
 ## Technical Info for the Description
 
 **Mod Name:** Auto Shulker Inventory
-**Version:** 1.2.1
-**Author:** DennisTheGamer
+**Version:** 1.5.0
+**Author:** Dennis_thegamer
 **License:** MIT
 **Modrinth:** https://modrinth.com/mod/auto-shulker-inventory
 **GitHub:** https://github.com/DennisTheGamer/auto-shulker-inventory

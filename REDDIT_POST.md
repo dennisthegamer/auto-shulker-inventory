@@ -2,7 +2,7 @@
 
 Hey everyone!
 
-I just released **Auto Shulker Inventory Loader**, a lightweight Fabric mod that automatically stores overflow items in shulker boxes when your inventory fills up.
+I just released **Auto Shulker Inventory Loader**, a lightweight Fabric & NeoForge mod that automatically stores overflow items in shulker boxes when your inventory fills up.
 
 ---
 
@@ -57,11 +57,12 @@ Configure the mod to your preferences:
 
 | Requirement | Version |
 |:------------|:--------|
-| Minecraft | **1.21 - 1.21.11** |
-| Fabric Loader | **0.18.3+** |
-| Fabric API | Required |
-| Java | **21+** |
-| ModMenu | Optional (for config screen) |
+| Minecraft | **1.21 – 26.2** |
+| Loader | **Fabric or NeoForge** |
+| Fabric API | Required (Fabric only) |
+| YetAnotherConfigLib (YACL) | Required |
+| Java | **21+** (25+ on MC 26.x) |
+| ModMenu | Optional on Fabric (for config button) |
 
 ---
 
@@ -79,4 +80,4 @@ Feedback, suggestions, and bug reports are welcome!
 
 ---
 
-*Made by DennisTheGamer*
+*Made by Dennis_thegamer*
