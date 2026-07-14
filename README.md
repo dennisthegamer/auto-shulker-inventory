@@ -12,28 +12,41 @@ A Minecraft mod (Fabric and NeoForge) that automatically stores items in shulker
 
 ## Compatibility
 
-This mod has two branches for different Minecraft versions:
+This branch (`mc1.21-1.21.8`) supports **Minecraft 1.21 through 1.21.8** on both loaders:
 
-### Branch: `mc1.21-1.21.8`
-- Minecraft 1.21 through 1.21.8
-- Loaders: Fabric (Loader 0.18.3+, Fabric API required) and NeoForge
+### Fabric
+- Fabric Loader 0.18.3+
+- Fabric API required
+- YetAnotherConfigLib (YACL) required
+- ModMenu (optional, recommended — adds the config button)
+- Java 21+
+
+### NeoForge
+- NeoForge 21.8+
 - YetAnotherConfigLib (YACL) required
 - Java 21+
 
-### Branch: `mc1.21.9-1.21.11`
-- Minecraft 1.21.9 through 1.21.11
-- Fabric Loader 0.18.3+
-- Fabric API required
-- ModMenu 17.0.0-alpha.1+ (optional, recommended)
-- Java 21+
+Other Minecraft versions live on their own branches:
+
+| Branch | Minecraft | Loaders |
+|---|---|---|
+| `mc1.21-1.21.8` | 1.21 – 1.21.8 | Fabric + NeoForge |
+| `mc1.21.9-1.21.11` | 1.21.9 – 1.21.11 | Fabric + NeoForge |
+| `mc26.1` | 26.1 – 26.1.2 | Fabric + NeoForge |
+| `mc26.2` | 26.2 | Fabric + NeoForge |
 
 ## Download
 
 Download the latest release from [Modrinth](https://modrinth.com/mod/auto-shulker-inventory) or [GitHub Releases](https://github.com/DennisTheGamer/auto-shulker-inventory/releases).
 
-Make sure to download the JAR matching your Minecraft version AND your mod loader, e.g.:
-- `auto_shulker_inventory-fabric-<version>.jar` for Fabric
-- `auto_shulker_inventory-neoforge-<version>.jar` for NeoForge
+Pick the JAR that matches your Minecraft version **and** your mod loader (`fabric` or `neoforge`):
+
+| Minecraft | Fabric | NeoForge |
+|---|---|---|
+| 1.21 – 1.21.8 | `auto_shulker_inventory-fabric-1.5.0+mc1.21-1.21.8.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc1.21-1.21.8.jar` |
+| 1.21.9 – 1.21.11 | `auto_shulker_inventory-fabric-1.5.0+mc1.21.9-1.21.11.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc1.21.9-1.21.11.jar` |
+| 26.1 – 26.1.2 | `auto_shulker_inventory-fabric-1.5.0+mc26.1-26.1.2.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc26.1-26.1.2.jar` |
+| 26.2 | `auto_shulker_inventory-fabric-1.5.0+mc26.2.jar` | `auto_shulker_inventory-neoforge-1.5.0+mc26.2.jar` |
 
 ## Installation
 
@@ -66,12 +79,10 @@ When your inventory is full and you pick up items or shift-click items:
 git clone https://github.com/DennisTheGamer/auto-shulker-inventory.git
 cd auto-shulker-inventory
 
-# For Minecraft 1.21-1.21.8
+# Check out the branch for your target Minecraft version, e.g.:
 git checkout mc1.21-1.21.8
-./gradlew build
 
-# For Minecraft 1.21.9-1.21.11
-git checkout mc1.21.9-1.21.11
+# Build both loader jars
 ./gradlew build
 ```
 
@@ -83,7 +94,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-- **Author**: DennisTheGamer
+- **Author**: Dennis_thegamer
 - **Built with**: Architectury Loom (Fabric + NeoForge from one codebase)
 - **Icon**: Custom design
 
