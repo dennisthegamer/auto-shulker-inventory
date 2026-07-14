@@ -1,5 +1,5 @@
 {
-  "config.auto_shulker_inventory.title": "Auto Shulker Inventory Settings",
+  "config.auto_shulker_inventory.title": "Auto Shulker Inventory Loader Settings",
 
   "config.auto_shulker_inventory.category.main_features": "Main Features",
   "config.auto_shulker_inventory.category.priority_system": "Priority System",
@@ -42,7 +42,7 @@
   "message.auto_shulker_inventory.stored_items": "Stored %s items in shulker box",
 
   "key.auto_shulker_inventory.select_target_slot": "Select Target Slot",
-  "key.category.inventory_shulker.main": "Auto Shulker Inventory",
+  "key.category.inventory_shulker.main": "Auto Shulker Inventory Loader",
 
   "message.auto_shulker_inventory.target_slot_set": "Target slot set to %s",
   "message.auto_shulker_inventory.target_slot_reset": "Target slot reset to automatic",

@@ -1,4 +1,4 @@
-# Auto Shulker Inventory
+# Auto Shulker Inventory Loader
 
 A Minecraft mod for **Fabric and NeoForge** that automatically stores items in shulker boxes when your inventory is full.
 
@@ -55,14 +55,14 @@ Pick the JAR that matches your Minecraft version **and** your mod loader (`fabri
 ### Fabric
 1. Install [Fabric Loader](https://fabricmc.net/use/)
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
-3. Download Auto Shulker Inventory (the `-fabric` JAR)
+3. Download Auto Shulker Inventory Loader (the `-fabric` JAR)
 4. Place the JAR files in your `mods` folder
 5. Launch Minecraft
 
 ### NeoForge
 1. Install [NeoForge](https://neoforged.net/)
 2. Download [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
-3. Download Auto Shulker Inventory (the `-neoforge` JAR)
+3. Download Auto Shulker Inventory Loader (the `-neoforge` JAR)
 4. Place the JAR files in your `mods` folder
 5. Launch Minecraft
 
@@ -76,13 +76,13 @@ When your inventory is full and you pick up items or shift-click items:
 
 ### Target slot
 
-By default the mod picks the slot to empty automatically. To always keep a specific slot free, either set "Preferred Target Slot" in the config (-1 = automatic, 0-8 = hotbar, 9-35 = main inventory), or hover the slot in your inventory screen and press **B** (rebindable in Options → Controls, category "Auto Shulker Inventory"). Press **B** on the same slot again to switch back to automatic. The configured slot is marked with a green outline. If the configured slot can't be emptied (it holds a shulker box, or its item fits in no box), the mod falls back to automatic selection.
+By default the mod picks the slot to empty automatically. To always keep a specific slot free, either set "Preferred Target Slot" in the config (-1 = automatic, 0-8 = hotbar, 9-35 = main inventory), or hover the slot in your inventory screen and press **B** (rebindable in Options → Controls, category "Auto Shulker Inventory Loader"). Press **B** on the same slot again to switch back to automatic. The configured slot is marked with a green outline. If the configured slot can't be emptied (it holds a shulker box, or its item fits in no box), the mod falls back to automatic selection.
 
 ## Configuration
 
 Settings are stored in `config/auto_shulker_inventory.json` and can be edited in-game:
-- **Fabric:** ModMenu → Auto Shulker Inventory → Config
-- **NeoForge:** Mods → Auto Shulker Inventory → Config
+- **Fabric:** ModMenu → Auto Shulker Inventory Loader → Config
+- **NeoForge:** Mods → Auto Shulker Inventory Loader → Config
 
 ## Building from Source
 
