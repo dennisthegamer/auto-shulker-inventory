@@ -30,8 +30,11 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.inventory_shulker]]
+# Optional: only the config screen needs it. Persistence is plain Gson so the
+# dedicated server runs without YACL -- it used to be pulled in through a static
+# ConfigClassHandler and crashed the server on the first item pickup.
 modId = "yet_another_config_lib_v3"
-type = "required"
+type = "optional"
 versionRange = "[3.9.5,)"
 ordering = "NONE"
 side = "CLIENT"

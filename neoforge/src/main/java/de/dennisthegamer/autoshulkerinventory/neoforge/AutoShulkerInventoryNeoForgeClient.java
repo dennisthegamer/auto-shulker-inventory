@@ -3,6 +3,7 @@ package de.dennisthegamer.autoshulkerinventory.neoforge;
 import de.dennisthegamer.autoshulkerinventory.AutoShulkerInventory;
 import de.dennisthegamer.autoshulkerinventory.client.SlotSelectionHandler;
 import de.dennisthegamer.autoshulkerinventory.config.ConfigScreen;
+import de.dennisthegamer.autoshulkerinventory.platform.Platforms;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.resources.Identifier;
@@ -24,8 +25,13 @@ public class AutoShulkerInventoryNeoForgeClient {
 	public AutoShulkerInventoryNeoForgeClient(ModContainer container, IEventBus modBus) {
 		AutoShulkerInventory.initClient();
 
-		container.registerExtensionPoint(IConfigScreenFactory.class,
-			(mod, parent) -> ConfigScreen.create(parent));
+		// YACL is only optional since the mod stopped needing it for persistence.
+		// Registering the factory unconditionally would throw NoClassDefFoundError
+		// the moment someone opens the config without YACL installed.
+		if (Platforms.get().isModLoaded("yet_another_config_lib_v3")) {
+			container.registerExtensionPoint(IConfigScreenFactory.class,
+				(mod, parent) -> ConfigScreen.create(parent));
+		}
 
 		modBus.addListener(AutoShulkerInventoryNeoForgeClient::onRegisterKeyMappings);
 		NeoForge.EVENT_BUS.addListener(AutoShulkerInventoryNeoForgeClient::onScreenRenderPost);
