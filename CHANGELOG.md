@@ -5,6 +5,21 @@ All notable changes to Auto Shulker Inventory Loader will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2026-07-20
+
+### Fixed
+- **Dedicated servers no longer crash when a player picks up an item.** The config held a
+  static YACL handler, and YACL is a client-only library, so the very first `Inventory#add`
+  on a NeoForge server died with `NoClassDefFoundError` and kicked the player. Settings are
+  now stored with plain Gson, which ships with Minecraft and exists on both sides. The file
+  path and format are unchanged, so existing configs are picked up as-is.
+
+### Changed
+- The mod now loads on Fabric dedicated servers (`environment` is `*` instead of `client`).
+  Auto-storage runs server-side, so it never did anything in multiplayer before.
+- YACL is optional instead of required. Only the config screen needs it; without it the mod
+  runs on defaults and the config button is hidden.
+
 ## [1.5.0] - 2026-07-14
 
 ### Changed

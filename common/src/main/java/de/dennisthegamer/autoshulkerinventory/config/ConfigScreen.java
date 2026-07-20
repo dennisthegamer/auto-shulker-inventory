@@ -14,8 +14,14 @@ import net.minecraft.network.chat.Component;
 public class ConfigScreen {
 
     public static Screen create(Screen parent) {
-        return YetAnotherConfigLib.create(ModConfig.HANDLER, (defaults, config, builder) ->
-                builder
+        // Bound manually instead of via ConfigClassHandler: ModConfig persists
+        // itself with Gson so the dedicated server can read it without YACL on
+        // the classpath. `defaults` is a throwaway instance carrying the field
+        // initialisers, which is exactly what the handler used to hand out.
+        ModConfig config = ModConfig.getInstance();
+        ModConfig defaults = new ModConfig();
+
+        return YetAnotherConfigLib.createBuilder()
                         .title(Component.translatable("config.auto_shulker_inventory.title"))
 
                         // Main Features
@@ -115,6 +121,8 @@ public class ConfigScreen {
                                         .build())
                                 .build())
 
-        ).generateScreen(parent);
+                        .save(config::save)
+                        .build()
+                        .generateScreen(parent);
     }
 }
