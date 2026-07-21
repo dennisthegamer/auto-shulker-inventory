@@ -24,6 +24,7 @@ public class AutoShulkerInventoryNeoForgeClient {
 
 	public AutoShulkerInventoryNeoForgeClient(ModContainer container, IEventBus modBus) {
 		AutoShulkerInventory.initClient();
+		ConfigSyncNeoForgeClient.register();
 
 		// YACL is only optional since the mod stopped needing it for persistence.
 		// Registering the factory unconditionally would throw NoClassDefFoundError

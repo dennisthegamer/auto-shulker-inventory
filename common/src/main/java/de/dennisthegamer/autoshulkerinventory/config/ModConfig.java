@@ -3,7 +3,10 @@ package de.dennisthegamer.autoshulkerinventory.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.dennisthegamer.autoshulkerinventory.AutoShulkerInventory;
+import de.dennisthegamer.autoshulkerinventory.network.ConfigSync;
+import de.dennisthegamer.autoshulkerinventory.network.ServerConfigStore;
 import de.dennisthegamer.autoshulkerinventory.platform.Platforms;
+import net.minecraft.world.entity.player.Player;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -64,6 +67,63 @@ public class ModConfig {
         return INSTANCE;
     }
 
+    /**
+     * The config that applies to {@code player}.
+     *
+     * <p>Every option here is a personal preference, not a server rule, so server-side
+     * code must not read the server's own file for a player: on a dedicated server that
+     * made every client's setting inert (a client asking for slot 10 got the server's -1).
+     *
+     * <p>Falls back to {@link #getInstance()} when no config was received -- on the client
+     * and in singleplayer that is the player's own file anyway, and on a dedicated server
+     * it means players without the mod keep being served by the server defaults.
+     */
+    public static ModConfig forPlayer(Player player) {
+        if (player == null || player.level().isClientSide()) {
+            return getInstance();
+        }
+        return ServerConfigStore.get(player.getUUID()).orElseGet(ModConfig::getInstance);
+    }
+
+    /**
+     * Parses a config received over the network. Returns {@code null} if the JSON is
+     * malformed -- callers must treat that as "no config" rather than propagating.
+     */
+    public static ModConfig fromJson(String json) {
+        if (json == null || json.length() > 8192) {
+            return null;
+        }
+        try {
+            ModConfig config = GSON.fromJson(json, ModConfig.class);
+            if (config == null) {
+                return null;
+            }
+            config.validate();
+            return config;
+        } catch (RuntimeException e) {
+            // JsonParseException and friends -- a hostile client must not reach further.
+            return null;
+        }
+    }
+
+    /** Clamps values that arrive from disk or from the network into their valid range. */
+    private void validate() {
+        if (preferredEmptySlot < -1 || preferredEmptySlot > 35) {
+            preferredEmptySlot = -1;
+        }
+        if (storageDelayTicks < 0 || storageDelayTicks > 20) {
+            storageDelayTicks = 0;
+        }
+        if (particleStyle == null) {
+            particleStyle = ParticleStyle.ENCHANT;
+        }
+    }
+
+    /** Serialises this config for the sync payload. */
+    public String toJson() {
+        return GSON.toJson(this);
+    }
+
     public static void loadAndValidate() {
         Path current = configPath();
         Path legacy = legacyPath();
@@ -85,9 +145,7 @@ public class ModConfig {
             config = new ModConfig();
         }
 
-        if (config.preferredEmptySlot < -1 || config.preferredEmptySlot > 35) {
-            config.preferredEmptySlot = -1;
-        }
+        config.validate();
 
         INSTANCE = config;
 
@@ -104,6 +162,14 @@ public class ModConfig {
             Files.writeString(path, GSON.toJson(this));
         } catch (IOException e) {
             AutoShulkerInventory.LOGGER.error("Failed to save config", e);
+        }
+
+        // Hooked here rather than at the call sites because the config is written from
+        // two places -- the YACL screen and the target-slot keybind -- and the keybind is
+        // the primary way preferredEmptySlot gets set. Guarded to INSTANCE so configs
+        // received from clients (server side) never echo back out.
+        if (this == INSTANCE) {
+            ConfigSync.notifyChanged();
         }
     }
 }

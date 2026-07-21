@@ -29,17 +29,18 @@ public abstract class AbstractContainerMenuMixin {
     @Inject(method = "doClick", at = @At("RETURN"))
     private void onSlotClick(int slotIndex, int button, ContainerInput actionType,
                              Player player, CallbackInfo ci) {
-        // CONFIG CHECK: Only proceed if shift-click storage is enabled
-        if (!ModConfig.getInstance().enableShiftClickStorage) {
-            return;
-        }
-
         // Check if this is a QUICK_MOVE action (shift-click)
         if (actionType == null || !actionType.toString().contains("QUICK_MOVE")) {
             return;
         }
 
         if (player.level().isClientSide()) {
+            return;
+        }
+
+        // CONFIG CHECK: Only proceed if shift-click storage is enabled. Read after the
+        // side check so the per-player lookup only happens where it applies.
+        if (!ModConfig.forPlayer(player).enableShiftClickStorage) {
             return;
         }
 
@@ -82,7 +83,7 @@ public abstract class AbstractContainerMenuMixin {
                 int storedCount = slotStack.getCount() - remaining.getCount();
 
                 // CONFIG CHECK: Debug logging
-                if (ModConfig.getInstance().enableDebugLogging) {
+                if (ModConfig.forPlayer(player).enableDebugLogging) {
                     AutoShulkerInventory.LOGGER.info(
                         "Auto-stored {} items in shulker box (inventory full, actionType: {}, button: {})",
                         storedCount, actionType, button

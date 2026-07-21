@@ -22,7 +22,7 @@ public class NotificationUtils {
             return;
         }
 
-        ModConfig config = ModConfig.getInstance();
+        ModConfig config = ModConfig.forPlayer(player);
 
         // Send chat notification if enabled
         if (config.enableChatNotifications) {
