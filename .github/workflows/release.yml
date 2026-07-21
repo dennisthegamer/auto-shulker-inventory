@@ -151,6 +151,36 @@ jobs:
           For detailed installation instructions, see the [README](https://github.com/DennisTheGamer/auto-shulker-inventory/blob/mc1.21-1.21.8/README.md).
           RELEASE_BODY
 
+      - name: Verify release artifacts
+        # Ohne diese Pruefung legt der Job ein LEERES Release an: die
+        # Release-Action uebergeht fehlende Dateien stillschweigend und meldet
+        # trotzdem Erfolg. Genau so blieben 1.5.0 und 1.5.1 hier ohne Jars.
+        env:
+          EXPECTED: |
+            artifacts/fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range }}.jar
+            artifacts/fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range }}-sources.jar
+            artifacts/neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range_neoforge }}.jar
+            artifacts/neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range_neoforge }}-sources.jar
+        run: |
+          set -eu
+          missing=0
+          while IFS= read -r f; do
+            # bewusst als if, nicht als &&-Liste -- die loest unter bash -e aus
+            if [ -z "$f" ]; then
+              continue
+            fi
+            if [ ! -f "$f" ]; then
+              echo "::error::Release-Artefakt fehlt: $f"
+              missing=1
+            fi
+          done <<< "$EXPECTED"
+          if [ "$missing" -ne 0 ]; then
+            echo "Tatsaechlich gebaut:"
+            find artifacts/fabric/build/libs artifacts/neoforge/build/libs -name "*.jar" | sed "s/^/  /"
+            exit 1
+          fi
+          echo "Alle vier Release-Artefakte vorhanden."
+
       - name: Create Release
         uses: andelf/nightly-release@main
         env:
@@ -161,5 +191,7 @@ jobs:
           prerelease: false
           body_path: release_body.md
           files: |
-            artifacts/fabric/build/libs/auto_shulker_inventory-fabric-*.jar
-            artifacts/neoforge/build/libs/auto_shulker_inventory-neoforge-*.jar
+            artifacts/fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range }}.jar
+            artifacts/fabric/build/libs/auto_shulker_inventory-fabric-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range }}-sources.jar
+            artifacts/neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range_neoforge }}.jar
+            artifacts/neoforge/build/libs/auto_shulker_inventory-neoforge-${{ needs.build.outputs.mod_version }}+mc${{ needs.build.outputs.minecraft_range_neoforge }}-sources.jar
