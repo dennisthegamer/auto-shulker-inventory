@@ -13,6 +13,7 @@ public class AutoShulkerInventoryFabricClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		AutoShulkerInventory.initClient();
+		ConfigSyncFabricClient.register();
 
 		SlotSelectionHandler.selectSlotKey =
 			KeyBindingHelper.registerKeyBinding(SlotSelectionHandler.createKeyMapping());

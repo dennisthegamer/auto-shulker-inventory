@@ -8,5 +8,6 @@ public class AutoShulkerInventoryFabric implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		AutoShulkerInventory.init();
+		ConfigSyncFabric.register();
 	}
 }

@@ -282,7 +282,7 @@ public class ShulkerUtils {
         }
 
         ItemStack remaining = itemToStore.copy();
-        ModConfig config = ModConfig.getInstance();
+        ModConfig config = ModConfig.forPlayer(inventory.player);
 
         // FIRST PRIORITY: Try to store in the shulker box held by cursor (if enabled)
         if (config.enableCursorPriority && !cursorStack.isEmpty() && isShulkerBox(cursorStack) && hasSpace(cursorStack)) {

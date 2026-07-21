@@ -17,14 +17,15 @@ public class InventoryMixin {
 
     @Inject(method = "add(Lnet/minecraft/world/item/ItemStack;)Z", at = @At("RETURN"))
     private void onItemAdded(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        // CONFIG CHECK: Only proceed if auto storage is enabled
-        if (!ModConfig.getInstance().enableAutoStorage) {
-            return;
-        }
-
         Inventory inventory = (Inventory) (Object) this;
 
         if (inventory.player == null || inventory.player.level().isClientSide()) {
+            return;
+        }
+
+        // CONFIG CHECK: Only proceed if auto storage is enabled. Read after the
+        // side check so the per-player lookup only happens where it applies.
+        if (!ModConfig.forPlayer(inventory.player).enableAutoStorage) {
             return;
         }
 
@@ -41,7 +42,7 @@ public class InventoryMixin {
             return;
         }
 
-        ModConfig config = ModConfig.getInstance();
+        ModConfig config = ModConfig.forPlayer(inventory.player);
         int totalStored = 0;
         boolean preferredEmptied = false;
 
@@ -77,7 +78,7 @@ public class InventoryMixin {
         if (stored > 0) {
             inventory.setItem(preferredSlot, remaining);
 
-            if (ModConfig.getInstance().enableDebugLogging) {
+            if (ModConfig.forPlayer(inventory.player).enableDebugLogging) {
                 AutoShulkerInventory.LOGGER.info("Auto-stored {} items from preferred slot {}", stored, preferredSlot);
             }
         }
@@ -105,7 +106,7 @@ public class InventoryMixin {
                 inventory.setItem(i, remaining);
 
                 // CONFIG CHECK: Debug logging
-                if (ModConfig.getInstance().enableDebugLogging) {
+                if (ModConfig.forPlayer(inventory.player).enableDebugLogging) {
                     AutoShulkerInventory.LOGGER.info("Auto-stored {} items in shulker box", storedCount);
                 }
 

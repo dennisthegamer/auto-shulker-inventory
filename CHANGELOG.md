@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.5.1] - 2026-07-20
 
+### Added
+- **Your own settings now apply on dedicated servers.** Every option here is a personal
+  preference rather than a server rule, so the server no longer answers with its own
+  config: the client sends its settings on join and again after every change, and the
+  server keeps them per player. Players without the mod are still served by the
+  server's defaults.
+
 ### Fixed
 - **Dedicated servers no longer crash when a player picks up an item.** The config held a
   static YACL handler, and YACL is a client-only library, so the very first `Inventory#add`
