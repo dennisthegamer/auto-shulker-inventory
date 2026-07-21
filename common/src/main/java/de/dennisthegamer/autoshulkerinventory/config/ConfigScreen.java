@@ -20,6 +20,9 @@ import net.minecraft.network.chat.Component;
 public class ConfigScreen {
 
     public static Screen create(Screen parent) {
+        // Bound manually instead of via ConfigClassHandler: ModConfig persists
+        // itself with Gson so the dedicated server can read it without YACL on
+        // the classpath.
         ModConfig config = ModConfig.getInstance();
 
         return YetAnotherConfigLib.createBuilder()

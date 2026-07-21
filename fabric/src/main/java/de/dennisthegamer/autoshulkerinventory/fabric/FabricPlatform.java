@@ -11,4 +11,9 @@ public class FabricPlatform implements Platform {
     public Path getConfigDir() {
         return FabricLoader.getInstance().getConfigDir();
     }
+
+    @Override
+    public boolean isModLoaded(String modId) {
+        return FabricLoader.getInstance().isModLoaded(modId);
+    }
 }

@@ -13,7 +13,7 @@
 	},
 	"license": "MIT",
 	"icon": "assets/inventory_shulker/icon.png",
-	"environment": "client",
+	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"de.dennisthegamer.autoshulkerinventory.fabric.AutoShulkerInventoryFabric"
@@ -32,10 +32,10 @@
 		"fabricloader": ">=0.18.3",
 		"minecraft": ">=1.21.9 <=1.21.11",
 		"java": ">=21",
-		"fabric-api": "*",
-		"yet_another_config_lib_v3": ">=3.8.0"
+		"fabric-api": "*"
 	},
 	"suggests": {
-		"modmenu": ">=17.0.0"
+		"modmenu": ">=17.0.0",
+		"yet_another_config_lib_v3": ">=3.8.0"
 	}
 }

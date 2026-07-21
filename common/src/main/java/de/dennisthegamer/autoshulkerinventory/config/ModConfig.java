@@ -1,91 +1,163 @@
 package de.dennisthegamer.autoshulkerinventory.config;
 
-import de.dennisthegamer.autoshulkerinventory.platform.Platforms;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
+import de.dennisthegamer.autoshulkerinventory.AutoShulkerInventory;
+import de.dennisthegamer.autoshulkerinventory.network.ConfigSync;
+import de.dennisthegamer.autoshulkerinventory.network.ServerConfigStore;
+import de.dennisthegamer.autoshulkerinventory.platform.Platforms;
+import net.minecraft.world.entity.player.Player;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+// Persistence is plain Gson, NOT YACL's ConfigClassHandler.
+//
+// This class is touched on the dedicated server: InventoryMixin and
+// AbstractContainerMenuMixin run there and call getInstance() on every item
+// pickup. YACL is a client-only library, so the static ConfigClassHandler field
+// that used to live here loaded dev.isxander classes on first access and killed
+// the server with NoClassDefFoundError the moment a player picked anything up.
+// Gson ships with Minecraft and exists on both sides.
+//
+// The file path and format are unchanged (plain JSON at
+// auto_shulker_inventory.json) -- YACL wrote the very same shape here, so
+// existing configs are read as-is with no migration.
+//
+// The YACL config screen is unaffected -- ConfigScreen binds to this instance
+// manually and calls save() itself.
 public class ModConfig {
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final File CONFIG_FILE = new File(
-        Platforms.get().getConfigDir().toFile(),
-        "auto_shulker_inventory.json"
-    );
 
-    private static ModConfig INSTANCE = null;
+    private static ModConfig INSTANCE;
 
-    // === Feature Toggles ===
+    private static Path configPath() {
+        return Platforms.get().getConfigDir().resolve("auto_shulker_inventory.json");
+    }
 
     // Main Features
-    public boolean enableAutoStorage = true;  // InventoryMixin
-    public boolean enableShiftClickStorage = true;  // AbstractContainerMenuMixin
+    public boolean enableAutoStorage = true;
+    public boolean enableShiftClickStorage = true;
 
-    // Priority System (for AbstractContainerMenuMixin)
-    public boolean enableCursorPriority = true;  // Priority 1
-    public boolean enableContainerShulkerPriority = true;  // Priority 2
-    public boolean enableInventoryShulkerFallback = true;  // Priority 3
+    // Priority System
+    public boolean enableCursorPriority = true;
+    public boolean enableContainerShulkerPriority = true;
+    public boolean enableInventoryShulkerFallback = true;
 
     // Preferred slot to empty during auto-storage (-1 = automatic, 0-8 hotbar, 9-35 main inventory)
     public int preferredEmptySlot = -1;
 
-    // === Additional Options ===
-
-    public boolean enableDebugLogging = false;
+    // Notifications & Feedback
     public boolean enableChatNotifications = true;
     public boolean enableSoundEffects = true;
-    public boolean enableVisualIndicators = false;  // Future: particle effects
+    public boolean enableVisualIndicators = false;
 
-    // Advanced Options
-    public int storageDelayTicks = 0;  // Delay before auto-storage (0 = instant)
-
-    // === Config Management ===
+    // Advanced
+    public boolean enableDebugLogging = false;
+    public int storageDelayTicks = 0;
 
     public static ModConfig getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = load();
+            loadAndValidate();
         }
         return INSTANCE;
     }
 
-    public static ModConfig load() {
-        if (CONFIG_FILE.exists()) {
-            try (FileReader reader = new FileReader(CONFIG_FILE)) {
-                ModConfig config = GSON.fromJson(reader, ModConfig.class);
-                if (config != null) {
-                    if (config.preferredEmptySlot < -1 || config.preferredEmptySlot > 35) {
-                        config.preferredEmptySlot = -1;
-                    }
-                    return config;
-                }
-            } catch (IOException | JsonParseException e) {
-                System.err.println("Failed to load config, using defaults: " + e.getMessage());
+    /**
+     * The config that applies to {@code player}.
+     *
+     * <p>Every option here is a personal preference, not a server rule, so server-side
+     * code must not read the server's own file for a player: on a dedicated server that
+     * made every client's setting inert (a client asking for slot 10 got the server's -1).
+     *
+     * <p>Falls back to {@link #getInstance()} when no config was received -- on the client
+     * and in singleplayer that is the player's own file anyway, and on a dedicated server
+     * it means players without the mod keep being served by the server defaults.
+     */
+    public static ModConfig forPlayer(Player player) {
+        if (player == null || player.level().isClientSide()) {
+            return getInstance();
+        }
+        return ServerConfigStore.get(player.getUUID()).orElseGet(ModConfig::getInstance);
+    }
+
+    /**
+     * Parses a config received over the network. Returns {@code null} if the JSON is
+     * malformed -- callers must treat that as "no config" rather than propagating.
+     */
+    public static ModConfig fromJson(String json) {
+        if (json == null || json.length() > 8192) {
+            return null;
+        }
+        try {
+            ModConfig config = GSON.fromJson(json, ModConfig.class);
+            if (config == null) {
+                return null;
+            }
+            config.validate();
+            return config;
+        } catch (RuntimeException e) {
+            // JsonParseException and friends -- a hostile client must not reach further.
+            return null;
+        }
+    }
+
+    public static void loadAndValidate() {
+        Path path = configPath();
+
+        ModConfig config = null;
+        if (Files.exists(path)) {
+            try {
+                config = GSON.fromJson(Files.readString(path), ModConfig.class);
+            } catch (IOException | RuntimeException e) {
+                AutoShulkerInventory.LOGGER.error("Failed to load config, using defaults", e);
             }
         }
+        if (config == null) {
+            config = new ModConfig();
+        }
 
-        // Return default config
-        ModConfig config = new ModConfig();
-        config.save();
-        return config;
+        config.validate();
+
+        INSTANCE = config;
+
+        if (!Files.exists(path)) {
+            INSTANCE.save();
+        }
+    }
+
+    /** Clamps values that arrive from disk or from the network into their valid range. */
+    private void validate() {
+        if (preferredEmptySlot < -1 || preferredEmptySlot > 35) {
+            preferredEmptySlot = -1;
+        }
+        if (storageDelayTicks < 0 || storageDelayTicks > 20) {
+            storageDelayTicks = 0;
+        }
     }
 
     public void save() {
+        Path path = configPath();
         try {
-            CONFIG_FILE.getParentFile().mkdirs();
-            try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
-                GSON.toJson(this, writer);
-            }
+            Files.createDirectories(path.getParent());
+            Files.writeString(path, GSON.toJson(this));
         } catch (IOException e) {
-            System.err.println("Failed to save config: " + e.getMessage());
+            AutoShulkerInventory.LOGGER.error("Failed to save config", e);
+        }
+
+        // Hooked here rather than at the call sites because the config is written from
+        // two places -- the YACL screen and the target-slot keybind -- and the keybind is
+        // the primary way preferredEmptySlot gets set. Guarded to INSTANCE so configs
+        // received from clients (server side) never echo back out.
+        if (this == INSTANCE) {
+            ConfigSync.notifyChanged();
         }
     }
 
-    public void reset() {
-        INSTANCE = new ModConfig();
-        INSTANCE.save();
+    /** Serialises this config for the sync payload. */
+    public String toJson() {
+        return GSON.toJson(this);
     }
 }
