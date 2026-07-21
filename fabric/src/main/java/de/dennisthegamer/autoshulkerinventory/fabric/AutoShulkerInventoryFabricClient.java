@@ -15,6 +15,7 @@ public class AutoShulkerInventoryFabricClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		AutoShulkerInventory.initClient();
+		ConfigSyncFabricClient.register();
 
 		KeyMapping.Category category = KeyMapping.Category.register(
 			Identifier.fromNamespaceAndPath(AutoShulkerInventory.MOD_ID, "main"));
