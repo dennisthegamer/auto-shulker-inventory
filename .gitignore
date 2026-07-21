@@ -44,3 +44,8 @@ replay_*.log
 /jar/
 .superpowers/
 
+# Lokale Arbeitsdateien der KI-Assistenz -- bleiben auf der Platte, nicht im Repo
+CLAUDE.md
+AGENTS.md
+.claude/
+docs/superpowers/
