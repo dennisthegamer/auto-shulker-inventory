@@ -1,12 +1,12 @@
 # Automatically create GitHub releases with build artifacts
-# for every push to the mc26.2 branch
+# for every push to the mc26.3 branch
 
 name: Release
 
 on:
   push:
     branches:
-      - mc26.2
+      - mc26.3
 
 jobs:
   build:
@@ -152,7 +152,7 @@ jobs:
 
           **Installation:** Download the JAR matching your mod loader and place it in your mods folder. On Fabric you also need Fabric API and YetAnotherConfigLib; on NeoForge you need YetAnotherConfigLib.
 
-          For detailed installation instructions, see the [README](https://github.com/DennisTheGamer/auto-shulker-inventory/blob/mc26.2/README.md).
+          For detailed installation instructions, see the [README](https://github.com/DennisTheGamer/auto-shulker-inventory/blob/mc26.3/README.md).
           RELEASE_BODY
 
       - name: Verify release artifacts
@@ -190,8 +190,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ needs.build.outputs.mod_version }}-mc26.2
-          name: Auto Shulker Inventory Loader v${{ needs.build.outputs.mod_version }} (MC 26.2)
+          tag_name: v${{ needs.build.outputs.mod_version }}-mc26.3
+          name: Auto Shulker Inventory Loader v${{ needs.build.outputs.mod_version }} (MC 26.3)
           prerelease: false
           body_path: release_body.md
           files: |
