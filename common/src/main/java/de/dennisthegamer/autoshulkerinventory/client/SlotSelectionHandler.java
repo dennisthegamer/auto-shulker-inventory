@@ -10,7 +10,6 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.Slot;
-import org.lwjgl.glfw.GLFW;
 
 // Client-only by structure: referenced solely from the loader client entrypoints Ã¢â‚¬â€
 // never annotate with @Environment/@OnlyIn (see ConfigScreen for rationale).
@@ -25,8 +24,8 @@ public class SlotSelectionHandler {
     public static KeyMapping createKeyMapping(KeyMapping.Category category) {
         return new KeyMapping(
             "key.auto_shulker_inventory.select_target_slot",
-            InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_B,
+            InputConstants.Type.KEYBOARD,
+            InputConstants.KEY_B,
             category
         );
     }

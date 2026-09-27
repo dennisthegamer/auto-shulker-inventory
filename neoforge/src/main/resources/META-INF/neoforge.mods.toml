@@ -18,14 +18,14 @@ config = "inventory_shulker.mixins.json"
 [[dependencies.inventory_shulker]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.2,26.3)"
+versionRange = "[26.3,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.inventory_shulker]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.2,26.3)"
+versionRange = "[26.3,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
